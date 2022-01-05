@@ -50,4 +50,4 @@ databases - dw - tables - 새로운 파일 생성 : 공유폴더(SQL) );까지 �
 GRANT : 특정 사용자에게 권한 부여
 REVOKE : 특정 사용자 권한 회수
 
-COMMIT;
+COMMIT; - 마지막에 입력하면 됨
