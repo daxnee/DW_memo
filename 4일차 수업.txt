@@ -34,6 +34,7 @@ databases - dw - tables - 새로운 파일 생성 : 공유폴더(SQL) );까지 �
 컨트롤 + 엔터 =실행 
 테이블 한번 클릭 f5 누르면 파일 생성
 
+
 ★중요★ (정처기, 기술면접 출제)
 ***DDL(Data Definition Language) 데이터 정의 언어- 단위 :TTABLE
 -CREATE TABLE <table_name> : table 생성
@@ -51,3 +52,42 @@ GRANT : 특정 사용자에게 권한 부여
 REVOKE : 특정 사용자 권한 회수
 
 COMMIT; - 마지막에 입력하면 됨
+
+dept 부서테이블
+emp 사원테이블
+salgrade 연봉테이블
+
+data 탭에 있는 관계도
+EMPNO : 고유번호 (primary key) - 바뀌지 않음
+관계도 사각형 안에 있는 개체들을 속성 또는 컬럼이라고 칭함
+
+select에는 컬럼들 (ename, job ..) 
+from 에는 사원테이블
+
+
+form - where - select 순으로 DB가 읽어줌
+
+##데이터 조회해보기
+Q. 데이터 안에 있는 명단중, 고유값이 7839인 사람의 직업은?
+select
+job
+from emp
+where empno = 7839;
+
+Q. 데이터 안에 있는 명단중, 고유값이 7900인 사람의 이름과 직업은?
+select
+ename, (두개를 조회하려면 콤마로 구분해서 한번에 조회하기)
+job
+from emp
+where empno = 7900; (where은 조건문임) - 원하는 데이터 추출 
+*where 지우면 모든 데이터가 추출됨
+
+Q. 모든 데이터를 조회하시오
+select
+* (모든 데이터를 조회하겠다 ,애스터리스크(?))
+from emp; 
+
+메모장으로 만들때 테이블 먼저 적고 데이터를 적어야 함(이거는 선생님이 메모장으로 적어주신걸로 연습하기)
+...
+
+
