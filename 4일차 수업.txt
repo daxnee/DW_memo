@@ -20,6 +20,8 @@ IT 알쓸신잡
 MYSQL 안에 DB 그 안에 여러개의 table 그 안에 data가 있다.
 오라클, MYSQL 등을 관계형데이터베이스라고 칭함 = ★RDB★ (관계가 있다)
 관계형DB는 서로 관계를 설정할 수 있다.
+RDB안에 MYSQL이 들어있음 
+
 참고로 블록체인은 비관계형DB
 
 컴퓨터는 문자와 숫자를 설정해줘야 한다.
@@ -35,23 +37,23 @@ databases - dw - tables - 새로운 파일 생성 : 공유폴더(SQL) );까지 �
 테이블 한번 클릭 f5 누르면 파일 생성
 
 
-★중요★ (정처기, 기술면접 출제)
-***DDL(Data Definition Language) 데이터 정의 언어- 단위 :TTABLE
+★중요★ (정처기:1,2,3번 기술면접 출제)
+1. DDL(Data Definition Language) 데이터 정의 언어- 단위 :TABLE (테이블을 관리하는 명령어)
 -CREATE TABLE <table_name> : table 생성
 -DROP TABLE <table_name> : table 삭제
--ALTER TABLE <table_name> : table 수정 (테이블 이름 변결할때 씀)
+-ALTER TABLE <table_name> : table 수정 (테이블 이름 변경할때 씀)
 
-***DML(Data Manipulation Language) 데이터 조작 언어 - 단위 : 데이터
+★더 중요★
+2. DML(Data Manipulation Language) 데이터 조작 언어 - 단위 : 데이터 (테이블 안에 있는 데이터를 관리하는 명령어)
 -SELECT : 데이터 조회
 -DELETE : 데이터 삭제
 -UPDATE : 데이터 수정
 -INSERT : 데이터 생성
 
-알아두기 / DCL(Data Control Language) 데이터 제어 언어
+3. DCL(Data Control Language) 데이터 제어 언어 - 신입은 거의 쓸일이 없다. 참고용
 GRANT : 특정 사용자에게 권한 부여
 REVOKE : 특정 사용자 권한 회수
 
-COMMIT; - 마지막에 입력하면 됨
 
 dept 부서테이블
 emp 사원테이블
@@ -63,9 +65,11 @@ EMPNO : 고유번호 (primary key) - 바뀌지 않음
 
 select에는 컬럼들 (ename, job ..) 
 from 에는 사원테이블
+ commit; => COMMIT 역할, 마지막에 입력하면 됨
+근데 debeaver는 오토 커밋이 있어서 입력 불필요
 
+DB가 읽는 순서 : from -> where -> select -> order by
 
-form - where - select 순으로 DB가 읽어줌
 
 ##데이터 조회해보기
 Q. 데이터 안에 있는 명단중, 고유값이 7839인 사람의 직업은?
@@ -88,3 +92,5 @@ select
 from emp; 
 
 메모장으로 만들때 테이블 먼저 적고 데이터를 적어야 함(이거는 선생님이 메모장으로 적어주신걸로 연습하기)
+
+엔티티 = 테이블 (대부분 테이블이라고 부름)
