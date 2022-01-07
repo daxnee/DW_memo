@@ -1,0 +1,264 @@
+##SQL 정리 & 복습
+group by 할때는 select 절에 group이 되는 컬럼이 위치한다
+그루핑 되는 항목만 묶어야지 안그러면 의미 없는 데이터가 온다.
+관계연산자 : !=, =, >, <, >=, =<
+논리연산자 : and, or
+문자연산자 : like (특정단어, 숫자를 찾고 싶을때)
+
+#입력 순서
+select
+<컬럼 이름>
+from 테이블 이름
+where  조건식
+group by 컬럼 이름
+having sum | avg | 
+order by desc | asc
+
+
+order by 2 => select에 있는 두번째 컬럼을 정렬하라는 뜻
+
+
+
+관계연산자(and, or, is null, is not null)는 where에 입력
+group by에 올 조건이 두 개 이상이면 , 로 입력해주기
+
+##1/7 SQL 추가 문제 
+1. 급여가 1500 ~ 2850 사이의 범위에 속하지 않는 모든 사원의 이름 및 급여를 표시하라.
+select 
+ENAME,
+sal
+from emp
+where sal < '1500' or sal > '2850';
+
+
+
+2. 1981년 2월 20일 ~ 1981년 5월 1일에 입사한 사원의 이름, 직위 및 입사일을 표시하라.
+ (입사을 기준으로 오름차순 정렬할 것!)
+select 
+ENAME,
+job,
+HIREDATE 
+from emp
+where HIREDATE >= '1981-02-20' 
+and HIREDATE <= '1981-05-01'
+order by hiredate;
+
+3. 부서가 10, 30에 속하는 사원 중 급여가 1500을 넘는 사원의 이름 및 급여를 표시하라. ★
+select 
+ENAME,
+sal
+from emp
+where (DEPTNO = 10 
+or 
+DEPTNO = 30)
+and 
+sal > 1500;
+
+
+4. 1982년에 입사한 모든 사원의 이름과 입사일을 표시하라. ★
+
+select 
+ENAME,
+HIREDATE 
+from emp
+where HIREDATE like '1982%';
+
+
+
+5. 직위가 CLREK, ANALYST 이면서 급여가 1000, 3000, 5000가 아닌 모든 사원의 이름, 직위 및 급여를 표시하라. ★
+select
+ename,
+job,
+SAL 
+from emp
+where job = 'clrek' 
+or job = 'analyst'
+and sal != 1000
+or sal != 3000
+or sal != 5000;
+
+
+**풀기 어려우면 문제를 번호별로 나눠서 순차적으로 풀기
+1. 부서별, 직책별 (~별 =>  그룹핑)
+2. 최대급여와 인원수, 최소급여를 조회(select)
+3. 10번 부서제외 (where)
+4. 인원수는 3명 이하(having)
+5. 인원수가 적은 순서 (정렬) => desc , asc 써도 되는데 
+select절에 있는 컬럼 순번을 적어도 됨(ex. order by 4)
+
+
+db 입력 순서와 읽는 순서는 다름 
+★회사 신입으로 가면 업무파악은 from부터 봐야함
+
+다중행함수
+group by
+sum, min, max, count
+
+
+##null값 처리하기 (*DB프로그램마다 명령어 다름)
+select 
+ifnull(comm, 100 ) => (null값이 있는 컬럼, 바꿀 값)
+-> 오라클, 마리아디비는 명령어가 다르니 그때가서 구글링하기
+from emp
+group by DEPTNO;
+
+※ifnull은 임의로 조작한거지 데이터값이 변하는 것은 아니다.
+
+★ifnull 한줄정리 : 데이터가 NULL인 행에 임의 데이터 넣는다.(데이터를 update하는게 아님. fake임)
+
+##date_format ★★★★★★ (오늘 날짜로 들어온 사람을 조회할때) (*DB프로그램마다 명령어 다름)
+날짜 함수
+select
+date_format(hiredate,'%y-%m-%d') or '%y,%m,%d' 이것도 가능
+from emp
+
+**데이터 입력할 때 숫자는 ''없이, 문자는 ''넣어서 입력하기
+=> JAVA할땐 오류가 명확히 나타나니까 알아두기
+
+데이트포맷시 형식을 모른다면 'mysql date_format' 구글링
+표 참고하면서 데이터 작성하기 https://devjhs.tistory.com/89
+
+##date_format을 활용한 그룹핑 방법
+문제1. 그룹별로 입사 날짜를 연도로 구분해서 조회하라
+select
+date_format(hiredate, '%y'),
+count(*)
+from emp
+group by date_format(hiredate, '%y')
+
+
+## and, or 의 실행순서
+이 둘을 where 조건에 동시에 사용할 때가 있음
+1. and (먼저 실행)
+2. or
+
+문제1. 부서가 10,30인 사람중
+select 
+ENAME,
+sal
+from emp
+where 
+(
+DEPTNO = 10 
+or 
+DEPTNO = 30
+)
+and 
+sal > 1500;
+
+##기본 sql 추가 문제
+문제1. 입사일이 1980-12-17에서 1982-01-23인 사람의 이름을 조회
+
+select 
+ename
+from emp
+where HIREDATE >= '1980-12-17'
+and HIREDATE <= '1982-01-23';
+=> 만약 and가 아닌 or을 쓰면 모든 사원이 다 나옴
+
+
+문제2.  직업이 salesman이고 부서번호가 30인 사람의 이름을 조회
+select 
+ename
+from emp
+where JOB = 'salesman' and
+DEPTNO = 30;
+
+문제3. 사원번호 7782인 사람의 이름을 BRIAN으로 업데이트 하기
+update emp 
+set ename = 'BRIAN' 
+where DEPTNO = 7782;
+
+----------------------일반 쿼리 끝
+
+## ★고급쿼리★ (JOIN, Sunquey...) -> 실무에서 유용하게 쓰임
+join을 알기전에 알아야 하는 개념
+foreign key
+join : 두 개 이상의 테이블을 조회할때 사용. 
+단, 조회 하고자 하는 테이블들이 관계가 있어야 함.
+
+엔티티 관계도에서 
+emp,  dept 두개가 있음
+이 두 테이블의 관계형성을 ★FK★ 라고 함
+관계가 있는 테이블들을 셀렉해서 연결하는 것을 => ★JOIN★
+(*비관계형DB에선 JOIN을 안 함)
+
+테이블 = 엔티티 같은말임 (보통 테이블이라고 부름)
+
+
+from에 emp 쓰면 자동으로 e가 생김 => 중간에 as가 생략되어 있음(디폴트값)
+
+#조인방법1.(권장x) 
+
+select 
+ename
+from emp e, dept d 
+where e.deptno = d.DEPTNO 
+
+-왜 .을 사용하느냐?
+어떤 테이블에 있는 deptno를
+쓸건지 입력하는거
+
+*방법1 비권장 이유 : where을 여태 조건문으로 사용했는데
+기능이 추가되었기 때문에 쿼리문이 복잡해짐. 기능이 다른 것들은 같이 있으면 안됨(객체화, 모듈화)
+ㄴjava에서 더 배울것임
+
+
+#조인방법2
+select 
+ename
+from emp as e
+join dept as d
+on e.DEPTNO = d.DEPTNO 
+
+*사실 inner join인데 앞의 inner은 디폴트값이라서 안 써도 됨
+
+join은 emp와 dept의 교집합만 가져오는 것
+
+select 
+e.ename => 두개의 테이블의 ename이 겹치니까 앞에 e(enptno)를 붙여줘야 
+컴퓨터가 읽을 수 있음
+from emp as e
+join dept as d
+on e.DEPTNO = d.DEPTNO 
+where e.DEPTNO = 40
+
+ex) 테이블a 학생번호=1001 , 학생이름=양다은, 학과번호=9901
+테이블b 
+
+
+ex) 홈쇼핑에서 바지를 산 사람(dept) 티셔츠를 산 사람(enptno)
+두 개의 테이블이 있는데 둘 다 산 사람을 조회해보고 싶다
+=> 이럴때 join을 사용하면 손쉽게 출력이 가능함
+
+
+loc =  지역 dname =  부서 이름
+
+
+1. 사원명, 부서번호, 부서이름, 부서 근무지를 조회
+
+2. 부서별 급여합계와 부서이름을 조회
+
+
+3. 부서 근무지가 newyork이고, 
+직책이 manager인 사원의 이름과 급여를 조회하시오
+
+
+4. 1983년 이후 입사한 사원의 보너스가 null이면 100 주고,
+사원의 이름과 부서이름 직업을 조회하시오.
+
+구글 예시) 기본 SELECT gg._id, gg.name, s.title 
+FROM girl_group AS gg 
+JOIN song AS s 
+ON s._id = gg.hit_song_id;
+
+
+
+
+선생님 예시) 
+select 
+ e.ename,
+ d.dname
+from emp as e
+join dept as d
+on e.DEPTNO = d.DEPTNO
