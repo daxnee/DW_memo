@@ -132,7 +132,7 @@ group by date_format(hiredate, '%y')
 1. and (먼저 실행)
 2. or
 
-문제1. 부서가 10,30인 사람중
+문제1. 부서가 10,30인 사람중 월급이 1500 이상인 사람의 이름과 월급을 조회
 select 
 ENAME,
 sal
@@ -216,7 +216,7 @@ on e.DEPTNO = d.DEPTNO
 join은 emp와 dept의 교집합만 가져오는 것
 
 select 
-e.ename => 두개의 테이블의 ename이 겹치니까 앞에 e(enptno)를 붙여줘야 
+e.ename => 두개의 테이블(emp, dept)의 enptno가 겹치니까 앞에 e(enptno)를 붙여줘야 
 컴퓨터가 읽을 수 있음
 from emp as e
 join dept as d
@@ -227,12 +227,12 @@ ex) 테이블a 학생번호=1001 , 학생이름=양다은, 학과번호=9901
 테이블b 
 
 
-ex) 홈쇼핑에서 바지를 산 사람(dept) 티셔츠를 산 사람(enptno)
-두 개의 테이블이 있는데 둘 다 산 사람을 조회해보고 싶다
+ex) 홈쇼핑에서 고객의 구매 이력 ex) 티셔츠(dept), 바지(enptno)를 한번에 출력해서
+조회해보고 싶다 
 => 이럴때 join을 사용하면 손쉽게 출력이 가능함
 
 
-loc =  지역 dname =  부서 이름
+* loc =  지역 dname =  부서 이름
 
 
 1. 사원명, 부서번호, 부서이름, 부서 근무지를 조회
@@ -274,7 +274,7 @@ and e.job = 'manager'
 select
 e.ename,
 d.dname
-from emp as e
+from emp as e.
 join dept as d
 on e.DEPTNO = d.DEPTNO
 where e.hiredate like '1983%'
@@ -284,7 +284,7 @@ where e.hiredate like '1983%'
 
 
 
-선생님 예시) 
+선생님 기본 예시) 
 select 
  e.ename,
  d.dname
