@@ -1,32 +1,30 @@
-윈도우, 리눅스(*회사에서 많이 사용, 비용 절감, 보통 우분투 많이 사용), 맥OS(유닉스)
-=> 운영체제(=>소프트웨어)
+##<if로 학점 계산하기>
+public static void main(String[] args) {
+		int myscore = 90;
+		{
+			System.out.println("A학점입니다.");
+		}
+		if (myscore < 90 && myscore >= 80) {
+			System.out.println("B학점입니다.");
+		}
+		if (myscore <= 75 && myscore >= 70) {
+			System.out.println("C학점입니다.");
+		}
+	}
 
-ls : 내 경로 보기
-
-**질문유형
-형상관리툴 : 
-Git(스타텁, 사기업) - 작업을 개인이 보관 (중앙 서버 X)
-Svn(공공기관, 연구소등 국가기관) - 작업을 한곳으로 모아 저장함 (중앙 서버가 존재)
-
-서버 Server - 서비스를 제공해주는 주체 (앱, 웹이 서비스)
-
-
-git bash
-sha256 - 개인정보 암호화 저장
-
-기본 설정 : 내pc - 보기- 파일확장명 체크
-
-ip는 집주소와 같은 개념
-host번호 아이피 가장 끝부분 숫자
-
-***메모장 내용 수정 후 업로드 방법
-git commit -m '수정' ('' 안에는 아무 내용이나 적어도 가능)
-git push origin master
-
-아메리카노
-커피냠냠
-카페모카 추가요
-아메리카노 추가요~~~
-아메리카노,,,
-카페모카,,,에 샷추가
-샷추가 또,,
+##<if, else 계산식>
+public static void main(String[] args) {
+		int x = 10;
+		int y = 10;
+		int num = 0;
+		if (x == y) {
+			num = x * y; // num 100
+			if (x != y) { // => if조건 안 맞음(넘어감)
+				num = 0;
+			} else {
+				num += num;
+			}
+			num = num + 100; // 300
+			System.out.println(num);
+		}
+	}
