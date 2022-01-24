@@ -1,11 +1,3 @@
-### 기본 이클립스 설정 (회사 입사 필수 설정)
-0. 본인 만의 workspaces 생성
-1. 이클립스 인코딩 설정
-    window -> preferences -> general -> workspace -> texxt file encoding (UTF-8 수정)
-2. 북마크 설정
-    window -> show view -> other -> general -> Bookmarks 더블 클릭
-3. 폰트 크기(옵션)
-
 
 <if로 학점 계산하기>
 public static void main(String[] args) {
@@ -22,7 +14,7 @@ public static void main(String[] args) {
 	}
 
 
-<if, else 계산식>
+<if, else>
 public static void main(String[] args) {
 		int x = 10;
 		int y = 10;
@@ -62,13 +54,13 @@ public static void main(String[] args) {
 		final int 과목수 = 4; // final = 상수(변하지 않는 값)
 		int sum = 0; // 총합
 		double avg = 0; // 평균
-//-------------1.여기까지 변수를 줬으면 
+
 
 		sum = 국어 + 수학 + 영어 + 과학;
 		avg = sum / 과목수;
-//----------- 2. 변수를 이용해서 계산을 해주고 
+
 
 		System.out.println("총합 : " + sum + "입니다");
 		System.out.println("평균 : " + avg + "입니다");
-//------------3. 실행하기 위해서 명령어를 (Sysout~) 적어주면 결과값이 출력된다.
+
 	}
