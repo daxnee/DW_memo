@@ -1,4 +1,4 @@
-```java
+
 	public  static boolean isNum(int max){
 			final int standardVal = 10;
 			if(max < standardVal){
