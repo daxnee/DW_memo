@@ -5,7 +5,7 @@ public class Bank {
 	
 	
 	public int checkMoney() {
-		System.out.println("현재 잔액 : " + totalMoney + "만원");
+		System.out.println(+ totalMoney + "만원");
 		return this.totalMoney;
 		
 	}
@@ -19,6 +19,7 @@ public class Bank {
 			System.out.println("현재 잔액 : " + totalMoney + "만원");
 			System.out.println("****************************");
 		}
+		
 		if (this.totalMoney >= 1000000) {
 			payback = totalMoney * 0.1;
 			 this.totalMoney += payback;
