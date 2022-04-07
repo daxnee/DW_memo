@@ -27,6 +27,7 @@
 public class Cafe {
 	int count;
 	int totalCup;
+	String rank;
 
 		public int getCount() {
 			return count;
