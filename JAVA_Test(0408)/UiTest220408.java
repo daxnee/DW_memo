@@ -1,12 +1,12 @@
 package test;
 
 class User{
-	//ÇÊµåº¯¼ö
+	//í•„ë“œë³€ìˆ˜
 	String userId;
 	String password;
 	String rePassword;
 	boolean isLogin;
-	//»ı¼ºÀÚ
+	//ìƒì„±ì
 	public User(String userId, String password, String rePassword, boolean isLogin){
 		this.userId = userId;
 		this.password = password;
@@ -14,7 +14,7 @@ class User{
 		this.isLogin = isLogin;
 	}
 }
-// test ÆĞÅ°Áö »ı¼º ÈÄ  UiTest220408 Å¬·¡½º »ı¼ºÇÒ °Í!
+// test íŒ¨í‚¤ì§€ ìƒì„± í›„  UiTest220408 í´ë˜ìŠ¤ ìƒì„±í•  ê²ƒ!
 public class UiTest220408 {
 	
 	public static void main(String[] args) {
@@ -22,21 +22,20 @@ public class UiTest220408 {
 		String password = "123";
 		String rePassword = "123";
 		boolean isLogin = false;
-		//1.userId¿¡ ¾ÆÀÌµğ µ¥ÀÌÅÍ ´ëÀÔ (¾ÆÀÌµğ´Â 20±ÛÀÚ ÀÌÇÏ)
+		//1.userIdì— ì•„ì´ë”” ë°ì´í„° ëŒ€ì… (ì•„ì´ë””ëŠ” 20ê¸€ì ì´í•˜)
 		 if(userId.length() > 20) {
-			 System.out.println("id´Â 20±ÛÀÚ ÀÌÇÏ·Î ¼³Á¤ÇØÁÖ¼¼¿ä");
+			 System.out.println("idëŠ” 20ê¸€ì ì´í•˜ë¡œ ì„¤ì •í•´ì£¼ì„¸ìš”");
 		 }
 		 
-		 //2.ºñ¹Ğ¹øÈ£¿Í Àçºñ¹Ğ¹øÈ£ µ¥ÀÌÅÍ ´ëÀÔ (ºñ¹Ğ¹øÈ£ ±ÛÀÚ´Â 15±ÛÀÚ ÀÌÇÏ)
-		 if(password.length() > 15 && rePassword.length() > 15) {
-			 System.out.println("ºñ¹Ğ¹øÈ£´Â 15±ÛÀÚ ÀÌÇÏ·Î ¼³Á¤ÇØÁÖ¼¼¿ä!");
+		 ///2.ë¹„ë°€ë²ˆí˜¸ì™€ ì¬ë¹„ë°€ë²ˆí˜¸ ë°ì´í„° ëŒ€ì… (ë¹„ë°€ë²ˆí˜¸ ê¸€ìëŠ” 15ê¸€ì ì´í•˜)
+			 System.out.println("ë¹„ë°€ë²ˆí˜¸ëŠ” 15ê¸€ì ì´í•˜ë¡œ ì„¤ì •í•´ì£¼ì„¸ìš”!");
 		 }
-		//3.ºñ¹Ğ¹øÈ£¿Í Àçºñ¹Ğ¹øÈ£ ÀÏÄ¡ ÇÏ¸é isLogin¿¡ true ´ëÀÔ
+		//3.ë¹„ë°€ë²ˆí˜¸ì™€ ì¬ë¹„ë°€ë²ˆí˜¸ ì¼ì¹˜ í•˜ë©´ isLoginì— true ëŒ€ì…
 			 if(password.equals(rePassword)) {
 				 isLogin = true;
 			 }
 		 
-		//4.1~3¹ø ¸¸Á·ÇÏ¸é UserÅ¬·¡½º È£Ãâ, »ı¼ºÀÚ ÆÄ¶ó¹ÌÅÍ¿¡ °ª ´ëÀÔ.
+		//4.1~3ë²ˆ ë§Œì¡±í•˜ë©´ Userí´ë˜ìŠ¤ í˜¸ì¶œ, ìƒì„±ì íŒŒë¼ë¯¸í„°ì— ê°’ ëŒ€ì….
 			 if(isLogin) {
 			 User user =  new User(userId, password, rePassword, isLogin);
 			 System.out.println("ID : " + userId );
