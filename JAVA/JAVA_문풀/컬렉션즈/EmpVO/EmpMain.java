@@ -70,19 +70,19 @@ public class EmpMain {
 		System.out.println("문제 5번 : " + jobCount);
 		
 		
-		//6. 사원 중 급여를 가장 많이 받는 사원의 번호,이름,입사년도 조회
-//		int max = 0;
-//		for(int i=0; i<list.size(); i++) {
-//		if(max < list.get(i).sal) {
-//			max = list.get(i).sal;
-//			max = i;
-//			if(max == list.get(i).sal) {
-//				System.out.println("문제 5번 : " + list.get(i).empno);
-//				System.out.println("문제 5번 : " + list.get(i).ename);
-//				System.out.println("문제 5번 : " + list.get(i).hiredate);
-//				
-//			}
-//			}
+		// 6. 사원중 급여를 가장 많이 받는 사원의 번호, 이름, 입사년도 
+		int max =0;
+		int maxI = 0;
+		for(int i=0; i<list.size(); i++) {
+			if(max < list.get(i).sal) {
+				max = list.get(i).sal;
+				maxI = i;
+			}
+		}
+		System.out.println("이름 : "  + list.get(maxI).ename);
+		System.out.println("번호 : " + list.get(maxI).empno);
+		System.out.println("입사년도 : " + list.get(maxI).hiredate);
+
 		
 		//7. 부서번호별 수 조회 ex) 20 : 2명, 30: 3명
 		int deptno_10 = 0;
@@ -116,7 +116,7 @@ public class EmpMain {
 		  }
 		  }
 		  System.out.println("문제 8번 :" + monthCount);
-		  System.out.println("**********************");
+		  System.out.println("**************문제B**************");
 		
 		
 		// 문제B
@@ -139,16 +139,76 @@ public class EmpMain {
 		}
 		System.out.println("B-2번 :" + salSum / len);
 		
-		//3. 사원번호가 7844, 7876인 사원에게 comm 200을 지급하시오.
-//		for(int i=0; i<list.size(); i++) {
-//			if(list.get(i).empno == 7844 && list.get(i).empno == 7876) {
-//				list.get
-//		}
-//		}
+		
+		
+		//3. 사원번호가 7844, 7876인 사원에게 comm 200을 지급하시오. **
+		
+		int comm = 0;
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).empno == 7844 || list.get(i).empno == 7876) {
+				list.get(i).comm += 200;
+		}
+			System.out.println("B-3번 : "+list.get(i).comm);
+		}
+		
 		
 		//4. 사원이름이 null인 사원이름에 '데이터 없음' 으로 수정하시오. 
+		for(int i=0; i<list.size(); i++) {
+			String checkName = list.get(i).ename;
+			if(checkName == null) {
+				checkName = "데이터없음";
+				System.out.println("B-4번 "+ list.get(i).empno +" : "+ checkName);
+		}
+		}
+		
 		//5. 20번 부서가 올해 실적이 좋지 않습니다. 20번부서를 모두 해고(제거)하십시오.
 		
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).deptno == 20) {
+				System.out.println("해고된 사람 이름 :" + list.get(i).ename ); // 지울 사람 확인하고 
+				list.remove(i); // 지우기
+		}
+		}
+		
+//		int max=0;
+//		int maxI = 0;
+//		for(int i=0; i<list.size(); i++) {
+//			if(max < list.get(i).sal ) {
+//				max = list.get(i).sal;
+//				maxI = i;
+//			}
+//		}
+//		System.out.println("문제 6번 : "+ list.get(maxI).empno);
+//		System.out.println("문제 6번 : "+ list.get(maxI).ename);
+//		System.out.println("문제 6번 : "+ list.get(maxI).hiredate);
+		
+		
+	// ---------------------------------------------------
+		System.out.println("**********번외문제***********");
+	// 번외문제1. 사원중 가장 높은 급여의 액수 	
+		
+		for(int i=0; i<list.size(); i++) {
+			if(max < list.get(i).sal) {
+				max = list.get(i).sal;
+			}
+		}
+		System.out.println("최대 급여 : " + max);
+		
 
+	// 번외문제2. 사원중 가장 적은 급여의 액수
+		int min = list.get(0).sal;
+		int temp = 0;
+		for(int i=0; i<list.size(); i++) {
+			if(min > list.get(i).sal) {
+				 min = list.get(i).sal;
+			}
+		}
+		System.out.println("최소 급여 : " + min);
+		
+		
+		
+		
 	}
-}
+	}
+	
+	
