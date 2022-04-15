@@ -66,7 +66,7 @@ ArrayList를 : 무한정으로 데이터를 추가할 수 있고 , 수정과 삭
 - int -> Integer
 String (String은 클래스라서 대문자로 시작)
 double -> Double
-
+    
 - 결론 : <> 제네릭이고, 괄호 안에는 클래스만 올 수 있다!
 
 
