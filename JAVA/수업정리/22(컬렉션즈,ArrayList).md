@@ -21,7 +21,7 @@ int arr[] = new int[20]; // 배열 선언방법 2 : 내용 안 넣고 배열의 
 ---
 
 - C언어 -> 컬렉션즈 x
-- ava, Python, JavaScript(TypeScript) -> 컬렉션즈 o
+- java, Python, JavaScript(TypeScript) -> 컬렉션즈 o
 
 * 프로그래밍을 하려면 자료구조를 알아야 함.
 STACK, HEAP, 큐 ,,,
@@ -34,7 +34,7 @@ STACK, HEAP, 큐 ,,,
 자바에선 여러 상황에서 사용할 수 있는 다양한 컨테이너를 제공하는데 이것을 컬렉션즈 프레임워크라고 부른다.
 
 ```
-Collection(최상위카테고리)             Map (최상위카테고리)
+Collection(최상위카테고리)           Map (최상위카테고리)
 
 - Set
 - List
@@ -97,7 +97,8 @@ public class ArrayList_Study {
 		ArrayList<String> list = new ArrayList<String>();  // () : 생성자
 		// ctrl + shift + o => import 
 		// <> : 제네릭
-		
+		// 	ArrayList<String>() : ArrayList 클래스 안에 있는 String 데이터만 사용하겠다!
+			
 		list.add("시금치 파스타"); // add : 배열에 데이터를 삽입.
 		list.add("곱창 파스타");
 		list.add("곱창 파스타");
@@ -234,7 +235,8 @@ public static String getValue(String name) {
 ```java
 public class EmpMain {
 	// 메소드로 풀어보기
-	public static ArrayList<EmpVO> getEmpList(ArrayList<EmpVO> list){ // EmpVO를 담고 있는 ArrayList를 파라미터로 받고 있다.
+	public static ArrayList<EmpVO> getEmpList(ArrayList<EmpVO> list){ // EmpVO를 담고 있는 ArrayList를 파라미터로 받고 있다. 
+	//list는 main에서 new로 인스턴스화 한 변수 이름임!
 		for(int i=0; i<list.size(); i++) {
 			System.out.println("메소드로 호출 : "+ list.get(i).empno);
 			System.out.println("메소드로 호출 : " + list.get(i).ename);
