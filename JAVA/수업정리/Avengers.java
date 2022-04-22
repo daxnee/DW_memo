@@ -33,10 +33,12 @@ public class Avengers {
 		 if(member == null){
 			 member = new Member();
 		 } //이렇게 설정해줘서 null을 막아준다 
-		 member.setName("토르");
+
+		 member.setName("토르"); //멤버세팅
+
 		 //멤버클래스에 stone을 추가하려면?
-		 List<String> list = new ArrayList<String>();
-		 list.add("파워스톤");
+		 List<String> list = new ArrayList<String>(); // list를 불러옴(현재 list = null)
+		 list.add("파워스톤"); // list
 		 list.add("타임스톤");
 		 member.setStone(list);
 		 return member;
