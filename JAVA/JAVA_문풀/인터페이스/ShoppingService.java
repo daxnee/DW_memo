@@ -20,7 +20,7 @@ public class ShoppingService implements ShoppingServiceImpl{
 				maxI = i;
 			}
 		}
-		System.out.println(list.get(maxI));
+		System.out.println("포인트가 가장 많은 사람 : " + list.get(maxI));
 		return list;
 	}
 
@@ -28,38 +28,47 @@ public class ShoppingService implements ShoppingServiceImpl{
 	@Override
 	public List<UserVO> getFindByName(List<UserVO> list, String word) {
 		for(int i=0; i<list.size(); i++) {
-			String w = list.get(i).getUserName();
-			String name[] = w.split("");
-			if(name[0].equals(word)) {
+			String na = list.get(i).getUserName();
+			String name[] = na.split("");
+			if(name[0].equals(word)) { // main 파라미터에 S를 넣어주면 비교 가능
+				System.out.println("S로 시작하는 이름은 : " + list.get(i).getUserName());
 			}
-			System.out.println(list.get(i));
-			
 		}
 		return list;
 	}
+	
+	// 2번째 방법 : substring을 이용하기
+//	public List<UserVO> getFindByName(List<UserVO> list, String word) {
+//		for(int i=0; i<list.size(); i++) {
+//			String name = list.get(i).getUserName().substring(0, 1);
+//			if(name.equals(word)) {
+//				System.out.println("S로 시작하는 이름은 : "+list.get(i).getUserName());
+//			}
+//		}
+//		return null;
+//	}
 
 	@Override
 	//3. 현재날짜 기준으로 90일동안 방문 없었던 회원 휴먼 계정으로 수정.
 	//4. 휴먼계정 인원 수 조회.
-	
-	// 1. 두 날짜를(현재, 방문) 밀리세컨드로 바꾸고  
-	//2. 현재 - visit =  diffday
-	// 3. 90일의 diff를 구한 뒤
-	// 3. if diff가 90보다 크다면 휴면계정으로 set(true) 
 	public int getSleeperUserCount(List<UserVO> list) {
-		
-		
-		
-		return 0;
-		
+		int count = 0;
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).isSleeper()) {
+				count++;
+			}
+		}
+		System.out.println("휴면계정 인원 수 : "+count);
+		return count;
 	}
-
+	
 	@Override
 	public List<UserVO> updateNotSleeperToSleeper(List<UserVO> list, int days) {
 		
 		Date d = new Date();
 //		1. 오늘날짜를 구해야 함 
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);// 한국 시간으로 가져와야 함
+		// java에서 날짜를 계산할때는 SimpleDateFormat을 사용!
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);// Locale.KOREA : 한국 시간으로 가져와야 함
 		String strToday = formatter.format(Calendar.getInstance().getTime()); // 오늘 날짜 리턴
 		Date today = null; //오늘 날짜 => 전역변수로 만들어줘서 사용하기 쉽게 해줌
 		Date visit = null; //방문 날짜
@@ -80,34 +89,53 @@ public class ShoppingService implements ShoppingServiceImpl{
 			// 에러가 나면 catch할게
 			e.printStackTrace(); // 에러를 추적하겠다.
 		}
+		for(int i=0; i<list.size(); i++) {
+			System.out.println("회원 이름 : "+list.get(i).getUserName()+", 휴먼 계정여부 : "+list.get(i).isSleeper());
+		}
 		
 		return list;
 	}
 
 	@Override
-	// 6. 포인트가 가장 높은 회원 조회
 	public List<UserVO> updatePoint(List<UserVO> list, int point) {
 		for(int i=0; i<list.size(); i++) {
-			int maxP = 0;
-			int maxIndex = 0;
-			if(maxP < list.get(i).getPoint()) {
-				maxP = list.get(i).getPoint();
-				maxIndex = i;
+			if(!list.get(i).isSleeper()) {
+				list.get(i).setPoint(list.get(i).getPoint()+point);
+//			System.out.println("휴먼계정이 아닌 회원에게 포인트+100 => "+list.get(i).getPoint()+"점");
 			}
-			System.out.println(list.get(maxIndex));
 		}
 		return list;
 	}
 
+	// 6. 포인트가 가장 높은 회원 조회
 	@Override
 	public UserVO getPointRankerUser(List<UserVO> list) {
-		// TODO Auto-generated method stub
+		int maxP = 0;
+		int maxIndex = 0;
+		for(int i=0; i<list.size(); i++) {
+			if(maxP < list.get(i).getPoint()) {
+				maxP = list.get(i).getPoint();
+				maxIndex = i;
+			}
+		}
+		System.out.println("포인트가 가장 많은 사람 : " + list.get(maxIndex).getUserName());
 		return null;
-	}
+		}
+	
+	
 
 	@Override
 	public List<UserVO> getPurchaseRankerUser(List<UserVO> list, ProductVO vo, int userNo) {
-		// TODO Auto-generated method stub
+		double pointP= 0.05;
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getUserNo() == userNo) { // main에서 설정한 username과 같다면 (상품을 구매한 사람)
+				list.get(i).setPoint(list.get(i).getPoint()+(int)(vo.getPrice()*pointP));  // 포인트 지급
+				// 데이터타입이 double이라서 강제로 int형을 더해줘야만 계산이 가능함!
+				// (vo.getPrice()*pointP) : 상품 가격의 5%
+				int point = list.get(i).getPoint();
+				System.out.println("가격의 5%인 " +(int)(vo.getPrice()*pointP)+"를 포인트로 적립, 총 포인트 점수 = "+list.get(i).getPoint());
+			}
+		}
 		return list;
 	}
 
