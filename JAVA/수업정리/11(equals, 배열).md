@@ -3,6 +3,7 @@
 	앞 글자가 대문자면 Class!!!
 
 ## 문자형 데이터 비교
+```java
 	String id = "JAVA";
 	String id_2 = "JAVA";
 	if(id.equals("JAVA")) { // boolean이 t/f 구분해줌
@@ -21,14 +22,14 @@
 	아이디가 맞습니다.
 	아이디가 맞습니다.
 
+```
 
 
-
-## ==  (Call by Reference)
+### ==  (Call by Reference)
 	:비교하고자 하는 두개의 대상의 주소값을 비교함
 	ex) 철수와 길동이 같은 빌라에 세들어 사는데 둘을 비교하면 주소(위치)를 비교하기 때문에 호수는 달라도 결과값은 같다고 나옴.
 
-## equals (Call by Value)
+### equals (Call by Value)
 	: 비교하고자 하는 두개의 대상의 값 자체를 비교. (그래서 JAVA 문자 비교는 이걸로 해야됨)
 
 
@@ -53,9 +54,9 @@
 
 ```
 ## 배열
+- 배열은 서랍이라고 생각.
+- 배열은 0부터 시작함. 순번을 0부터 세야함
 
-	배열은 서랍이라고 생각하자.
-	배열은 0부터 시작함. 순번을 0부터 세야함
 ```java
 		int array[] = {2,4,6,9};
 		System.out.println(array[1]); // =>첫번째 배열(인덱스) 호출
@@ -104,11 +105,11 @@
 ## 홀수 구하기
 ```java
 		int array[] = {2,4,6,9};
-	//	for(int index=0; index<array.length; index++){
-	//	if((array[index]%2) != 0) {
-	//	System.out.println(index[]);
-	//	}
-	//	}	
+		for(int index=0; index<array.length; index++){
+		if((array[index]%2) != 0) {
+			System.out.println(array[index]);
+		}
+		}
 
 ```
 ## 배열 다시 설명
@@ -156,16 +157,15 @@
 
 	=> Arrays.sort(array); => 사실 이 한줄로 위 코드 해결 가능
 
-
 ```
 ## for문 종류
 
-	1. for each문 
+1. for each문 
 		for(int i : array){ => array 값을 i에 대입한다
 		System.out.println(i+" ");
 		
 		
-	2. for(int i=0; i<array.length; i++) {
+2. for(int i=0; i<array.length; i++) {
 				int x= array[i];
 				System.out.println(x);
 
@@ -173,8 +173,8 @@
 
 
 ## 배열은 두가지 종류> -알아만두기
-	int 배열[] = {100,100,100}; // 선언식 -> 지금까지 했던거
-	int 홍길동[] =  new int[100];
+- int 배열[] = {100,100,100}; // 선언식 -> 지금까지 했던거
+- int 홍길동[] =  new int[100];
 			
 		
 	int x= 100; // 변수를 100번 만들어라
