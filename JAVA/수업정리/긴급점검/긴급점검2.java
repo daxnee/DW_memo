@@ -18,7 +18,7 @@ public class 복습 {
 	public static Dw2 printStudent2() {
 		
 		//방법2
-		Dw2 d = new Dw2("반응형웹&앱개발반", "홍길동");
+		Dw2 d2 = new Dw2("반응형웹&앱개발반", "홍길동");
 		 return d;
 	}
 	
@@ -37,7 +37,7 @@ public class 복습 {
 	}
 }
 
-
+---
 
 package 스태틱;
 
