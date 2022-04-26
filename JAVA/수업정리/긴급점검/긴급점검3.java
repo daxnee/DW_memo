@@ -59,7 +59,7 @@ public class 긴급점검3 {
 		
 		Singer s2 = new Singer(); 
 		System.out.println(getSinger(s).SingerName);
-		
+		// get set 사용할땐 SingerName 바로 못쓰고 get 생성 후 getSingerName
 		
 		
 	
