@@ -178,6 +178,7 @@ public class ArrayList_Study2 {
 
 	public static void main(String[] args) {
 		Student s1 = new Student("양다은", 27, "대전"); // 배열에 클래스를 넣어줌. 배열 0번째에 Student 내용이 전부 들어가 있음.
+
 		ArrayList<Student> list = new ArrayList<Student>();
 		list.add(s1); // Student클래스 추가!
 		String name = list.get(0).name; // Student 클래스의 name을 불러옴!
