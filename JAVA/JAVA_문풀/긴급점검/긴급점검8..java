@@ -19,6 +19,7 @@ class Chef{
 
 public class 긴급점검8 {
 	
+	//리턴타입 list 
 	public static List<Chef> getChefList(){
 		List<Chef> list = new ArrayList<Chef>();
 		Chef l = new Chef();
@@ -45,9 +46,9 @@ public class 긴급점검8 {
 		
 	}
 	
+	// 리턴타입 int, 파라미터값엔 클래스타입인 List 
 	public static int getChefListCount(List<Chef> list){
 		int count =0;
-		
 		for(int i=0; i<list.size(); i++) {
 			if(list.get(i).getChefAge() >= 50) {
 				count ++;
@@ -58,16 +59,12 @@ public class 긴급점검8 {
 	
 
 	public static void main(String[] args) {
-		List<Chef> list = getChefList();
+		List<Chef> list = getChefList(); // static이라 인스턴스화 하지 않아도 메소드 호출 가넝한
 //		== System.out.println(getChefList());
 		System.out.println("50이상 요리사의 수는 : "+ getChefListCount(list));
 		
 	}
 }
-
-
-
-
 
 -------------------
 

@@ -3,7 +3,7 @@ package test;
 import java.util.ArrayList;
 import java.util.List;
 
-class MemberVO{
+class MemberVO{ 
 	private String memberNo;
 	private int sal;
 	
@@ -82,9 +82,7 @@ public class 긴급점검10 {
 		
 		
 		MemberService service = new MemberService();
-//		MemberVO sal1 = new MemberVO();
-//		MemberVO sal2 = new MemberVO();
-//		MemberVO sal3 = new MemberVO();
+
 		
 		
 		MemberService Service1 = new MemberService();
