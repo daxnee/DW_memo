@@ -13,10 +13,11 @@ public interface MemberServiceImpl {
 	
 	/**
 	 * @param list
-	 * @return
+	 * @return 
 	 * @date : 2022. 4. 27.
 	 * @author : yde
 	 */
 	public String getMemberNo(List<MemberVO> list);
 	
 }
+
