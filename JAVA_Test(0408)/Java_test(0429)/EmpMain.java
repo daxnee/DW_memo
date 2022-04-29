@@ -16,18 +16,15 @@ public class EmpMain {
 		EmpServiceImpl service = new EmpService();
 		//1번. 전체 사원 200달러 급여 인상하고 사원 리스트를 리턴 하시오.
 		service.getEmpList(list);
+		//2번. 급여가 가장 높은 사원을 리턴 하시오. (단, 급여 중복이 없다고 가정)
 		service.getEmp(list);
+		//3번. 사원 중 급여를 300이하로 받고 있는 사원 수를 구하시오.
 		service.getCount(list, 300);
 		
 		
-		DeptVO d = new DeptVO(10, "ALLEN");
-		d.setDeptno(10);
-		d.setDname("SALES");
 		List<DeptVO> list2 = new ArrayList<DeptVO>();
-		list2.add(d);
 		
-		//2번. 급여가 가장 높은 사원을 리턴 하시오. (단, 급여 중복이 없다고 가정)
-		//3번. 사원 중 급여를 300이하로 받고 있는 사원 수를 구하시오.
+		
 		//4번. 특정 사원에 부서번호 10, 부서이름 SALES 부서를 추가하고 사원을 리턴하시오.
 	
 	}
