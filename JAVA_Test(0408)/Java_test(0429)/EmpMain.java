@@ -21,11 +21,14 @@ public class EmpMain {
 		//3번. 사원 중 급여를 300이하로 받고 있는 사원 수를 구하시오.
 		service.getCount(list, 300);
 		
+		//4번. 특정 사원에 부서번호 10, 부서이름 SALES 부서를 추가하고 사원을 리턴하시오.
+		service.setDept(list.get(0));
+		System.out.println(list.get(0).getEname());
+		System.out.println(list.get(0).getEmpno());
+		
 		
 		List<DeptVO> list2 = new ArrayList<DeptVO>();
 		
-		
-		//4번. 특정 사원에 부서번호 10, 부서이름 SALES 부서를 추가하고 사원을 리턴하시오.
 	
 	}
 }

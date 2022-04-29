@@ -54,14 +54,12 @@ public class EmpService implements EmpServiceImpl{
 		//4번. 특정 사원에 부서번호 10, 부서이름 SALES 부서를 추가하고 사원을 리턴하시오.
 		List<DeptVO> list2 = new ArrayList<DeptVO>();
 		DeptVO d = new DeptVO(10, "ALLEN");
-		d.setDeptno(10);
-		d.setDname("SALES");
 		list2.add(d);
-		
-		
-		// -------- 여기부터 모르겠습니다 다시 풀어보겠습니답!
-		
+        empVO.setList(list);
 		return empVO;
+		
+		
+		
 	}
 
 	
