@@ -27,7 +27,6 @@ public class EmpMain {
 		System.out.println(list.get(0).getEmpno());
 		
 		
-		List<DeptVO> list2 = new ArrayList<DeptVO>();
 		
 	
 	}
