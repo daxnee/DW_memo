@@ -39,21 +39,27 @@
 
 5. 추상클래스와 Interface(인터페이스)에 차이점을 간략히 기술하시오.
 ```
+추상클래스 : 추상메소드와 일반메소드를 정의할 수 있다. 
+Interface : 인터페이스를 상속 받을 경우 extends가 아닌 implements를 사용함.
+
 추상클래스와 다르게 Interface는 다중상속이 가능하다.
 ```
 
 6. 상속에 대해 아는 내용을 간략히 기술하시오.
 ```
-슈퍼클래스에서 메소드를 정의하면 서브클래스에서 가져다 사용할 수 있는 기능을 말한다.
+슈퍼클래스에서 메소드를 서브클래스에서 *재정의*하여 사용하는 기능을 말한다.
 ```
 
 7. 생성자에 대해 아는 내용을 간략히 기술하시오.
 ```
-리턴타입이 없는 함수를 말한다. new를 통해 호출해야 한다.
+*초기화*를 목적으로 하는 기능이다. 리턴타입이 없으며 new를 통해 호출해야 한다.
+오버로딩으로 다용하게 사용 가능함.
+ 
 ```
 
 8. 컬렉션에 대해 아는 내용을 간략히 기술하시오.
 ```
+
 컬렉션은 값의 길이를 정하지 않아도 되는 배열을 말한다.
 ```
 
@@ -78,9 +84,10 @@
             a2.count = 20;
             a2.temp = 20;
 
-            System.out.println(a1.count); // 답 : 10
+            System.out.println(a1.count); // 답 : 20
             System.out.println(a1.temp); // 답 : 20
-
+    // count는 static이기 때문에 값을 공유한다. 
+    // 첫번째 a1.count에 10을 대입해도 두번째 a2.count에 20을 대입했기 때문에 a1, a2의 값을 같다(공유됨)
             System.out.println(a2.count); // 답 : 20 
             System.out.println(a2.temp); // 답 : 20
         }
@@ -118,11 +125,10 @@
 class A{
     private String name;
     private int age;
-
+    public A(Stirng name, int age){
+    this.name = name;
+    this.age = age;
+    }
 }
-
-
-this.name = name;
-this.age = age;
 
 ```
