@@ -118,7 +118,6 @@ Interface : 인터페이스를 상속 받을 경우 extends가 아닌 implements
         }
     }
 ```
-
 11. getter, setter을 이용하지 않고 필드변수 값을 초기화 하는 방법을 아래 코드로 작성하시오.
 
 ```java
