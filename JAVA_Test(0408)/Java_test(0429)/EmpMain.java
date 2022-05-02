@@ -25,7 +25,7 @@ public class EmpMain {
 		service.setDept(list.get(0));
 		System.out.println(list.get(0).getEname());
 		System.out.println(list.get(0).getEmpno());
-		
+		 
 		
 		
 	
