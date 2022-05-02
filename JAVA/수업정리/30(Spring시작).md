@@ -59,7 +59,7 @@ java -> spring
 ### Spring툴 sts 설치(IDE)
 ```
 내pc -> c드라이브 -> spring-workspace 폴더 만들기
-sts(start.spring.io) -> Tools Spring ->  Spring Tools 4 for Eclipse 64로 설치 -> 압축 풀기 ->  contents.zip 압축 풀기 -> SpringToolsuite4.exe 열기 -> 아까 만들었던 spring-workspace로 경로설정
+sts(start.spring.io) -> Tools Spring ->  Spring Tools 4 for Eclipse 64로 설치 -> 압축 풀기 ->  contents.zip 압축 풀기 -> SpringToolsuite4.exe 열기 -> 아까 만들었던 spring-workspace 폴더로 경로설정
 ```
 ### 회사 실무시 설정해야 하는 사항
 이클립스 or sts를 사용한다면 
@@ -70,7 +70,10 @@ sts(start.spring.io) -> Tools Spring ->  Spring Tools 4 for Eclipse 64로 설치
 2. 폰트 설정
     window - preferences - general - Apperance - color and fonts - basic - text Font - edit - 폰트와 크기 설정
 
+--그래들 설치부터 다시***
+
 3. 빌드관리도구 설치
+
     Gradle - 자바 - 2.6.7 - Artifact(이름 설정) : 프로젝트 이름이 됨(first-spring으로 이름 설정함) - java 버전 11로 선택
     (현재 쓰고 있는 자바보다 높은 버전은 사용이 불가능. 학원에서는 12를 쓰고 있으니까 그 아래로 설정하기) - add Dependencies 클릭 - spring wep 클릭 - Generate - 다운로드 받은 알집 파일 spring workspace에 파일 두고  '여기에 압축 풀기' 실행 (*파일 추가로 생성되지 않게 주의해서 압축풀기!)
 
