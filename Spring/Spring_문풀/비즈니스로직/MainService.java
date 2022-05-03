@@ -34,12 +34,16 @@ public class MainService {
 	         u.setAge(28);
 	         u.setAddr("대전");
 	         list.add(u);
+	         
+	         //방법1 : 60이상을 다 지우거나
+	         //방법2 : 60이상을 담는 배열을 추가하거나
 	        for(int i=0; i<list.size(); i++) {
-	        	if(list.get(i).getAge() <= 60) {
+	        	if(list.get(i).getAge() >= 60) {
+	        	 list.remove(i);
+	        	 --i; // 원소를 지우면 컬렉션즈는 앞으로 당겨짐. 그러니까 -i를 해서 다시 검사를 진행함
 	        	}
 	        	System.out.println( list.get(i).getName());
 	        }
-	        
 			return list;
 		}
 	    //문제 2. 나이가 가장많은 배우의 나이를 리턴하시오.

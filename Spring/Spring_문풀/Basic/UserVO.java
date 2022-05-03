@@ -19,4 +19,5 @@ public class UserVO {
 //		this.name = name; //@AllArgsConstructor가 대신해줌
 //		this.age = age;
 //	}
+
 }

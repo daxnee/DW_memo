@@ -7,7 +7,7 @@ python -> flask, 장고
 c -> asp
 java -> spring
 ```
-### `Spring`을 배우는 이유?
+### `Spring을 배우는 이유?`
 ```
 - Spring은 검증된 툴이다.
     * 검증 ? 많은 오류를 거쳐도 끄떡없는 프로그램 
@@ -17,7 +17,7 @@ java -> spring
 => 결론 : 수요가 많다.
 ```
 
-### Spring을 배우기 앞서...
+### `Spring을 배우기 앞서...`
 - 원리를 이해하기 보단 일단 작동 방법을 익히는 게 중요! ex) 운전 방법을 익히는  
 
 ---
@@ -64,29 +64,31 @@ java -> spring
 
 ```
 
-### Spring툴 `sts 설치(IDE)`
+### `Spring툴 sts 설치(IDE)`
 ```
 내pc -> c드라이브 -> spring-workspace 폴더 만들기
 sts tools -> Tools Spring ->  Spring Tools 4 for Eclipse 64로 설치 -> 압축 풀기 ->  contents.zip 압축 풀기 -> SpringToolsuite4.exe 열기 -> 아까 만들었던 spring-workspace 폴더로 경로설정
 ```
-### `회사 실무`시 `설정`해야 하는 사항
+### `회사 실무시 설정해야 하는 사항`
 이클립스 or sts를 사용한다면 
 
-1. `한글 설정`(설정해야만 다운로드 받을 때 한글이 깨지지 않는다)
-    ide 상단바에 window -> prefenrences -> encoding 검색 -> workspace 선택 ->  text file encoding - > other  선택 -> UTF-8 선택 -> Apply and Close
-
+1. `한글 설정` (설정해야만 다운로드 받을 때 한글이 깨지지 않는다)
+```
+ide 상단바에 window -> prefenrences -> encoding 검색 -> workspace 선택 ->  text file encoding - > other  선택 -> UTF-8 선택 -> Apply and Close
+```
 
 2. `폰트 설정`
-    window - preferences - general - Apperance - color and fonts - basic - text Font - edit - 폰트와 크기 설정
-
+```
+window - preferences - general - Apperance - color and fonts - basic - text Font - edit - 폰트와 크기 설정
+```
 
 3. `빌드관리도구` 설치
-    start.spring.io 접속 -> Gradle - Java -  Spring Boot2.6.7 - Artifact(이름 설정) : 프로젝트 이름이 됨(first-spring으로 이름 설정함) - java 버전 11로 선택
-    (현재 쓰고 있는 자바보다 높은 버전은 사용이 불가능. 학원에서는 12를 쓰고 있으니까 그 아래로 설정하기) - add Dependencies 클릭 - spring wep 클릭 - Generate - 다운로드 받은 알집 파일 spring workspace에 파일 두고  '여기에 압축 풀기' 실행 (*파일 추가로 생성되지 않게 주의해서 압축풀기!)
+```
+1) start.spring.io 접속 -> Gradle - Java -  Spring Boot2.6.7 - Artifact(이름 설정) : 프로젝트 이름이 됨(first-spring으로 이름 설정함) - java 버전 11로 선택(현재 쓰고 있는 자바보다 높은 버전은 사용이 불가능. 학원에서는 12를 쓰고 있으니까 그 아래로 설정하기) - add Dependencies 클릭 - spring wep 클릭 - Generate - 다운로드 받은 알집 파일 spring workspace에 파일 두고  '여기에 압축 풀기' 실행 (*파일 추가로 생성되지 않게 주의해서 압축풀기!)
 
-    다시 스프링 툴로 돌아가서 
-    import 프로젝트 - 그래들 클릭 - 안에 있는 exsting 어쩌고 코끼리 클릭 -  넥스트 -  아까 압출 풀었던 first-spring 파일로 경로 설정 
-
+2) 다시 스프링 툴로 돌아가서 
+import 프로젝트 - 그래들 클릭 - 안에 있는 exsting 어쩌고 코끼리 클릭 -  넥스트 -  아까 압출 풀었던 first-spring 파일로 경로 설정 
+```
 ---
 
 ### `이클립스로 시작하기`
@@ -95,13 +97,12 @@ sts tools -> Tools Spring ->  Spring Tools 4 for Eclipse 64로 설치 -> 압축 
 - 1번 한글설정 하기 - import projects- 그래들 - 코끼리 선택 - next
 - 경로 설정 (c드라이브- workspace - first_spring)
 ```
-
-### Spring `패키지 만들기`
+### `Spring 패키지 만들기`
 - dw.daeun.study 
     - dw 안에 daeun 안에 study 패키지가 3개 있는 구조
     - ex) www.naver.com 과 같은 구조라고 보면 됨. spring의 암묵적인 약속이다.
 
-### Spring `패키지 암묵적인 약속`
+### `Spring 패키지 암묵적인 약속`
 - 패키지는 3개 부터 시작한다(default)
 ex) com.naver.www
 
@@ -114,9 +115,7 @@ ex) com.naver.www
 두번째 패키지 : 회사이름(조직이름)
 세번째 패키지 : www가 아닌 프로젝트명을 기재해준다. (www 안씀)
 ```
-
-
-### controller
+### `controller`
 - controller 패키지 생성
 ```
 controller : url 요청을 받는 곳. 스프링이 클래스는 url을 요청받는 곳이야~ 라고 인식해줌, 이름이 controller로 끝나는 파일만 모여 있음.
@@ -129,28 +128,35 @@ controller : url 요청을 받는 곳. 스프링이 클래스는 url을 요청�
     * getMapping : http 메소드 중 get으로 요청한 것임!
     * http : spring 결과를 하이퍼텍스트로 전송해주겠다
 ```
-### localhost
-내꺼를 보고 싶다면 이렇게 검색해도 된다. `localhost:8080/index`
+### `localhost`
+내 ip의 결과창을 보고 싶다면 이렇게 검색해도 된다. `localhost:8080/설정한 url`
  
-### 두번 실행(컴파일)할 시 오류 나는 이유
+### `두번 실행(컴파일)할 시 오류 나는 이유`
 - `포트 번호(8080)`는 고유한 번호임 두번 실행(컴파일)되니까 오류가 남 (already ~ in use 오류메시지)
     - console 창 우측 상단 `컴퓨터 아이콘 옆 화살표` 누르면 실행된 기록이 나옴 첫번째 실행기록 눌러서 `중지`시키면 됨. (빨간색 네모)
 
 이러한 번거로운 과정을 생략할 수 있는 해결 가능한 기능이 있다. ↓
-### `자동으로 restart` 되는 기능
+### `자동으로 restart 되는 기능`
 ```
 1. devtools gradle 검색
 
 2. compileOnly("org.springframework.boot:spring-boot-devtools") 복사 
  
-3. 이클립스 좌측에 build.gradle 클릭  -> dependencies 아래줄에 복붙 , 저장 -> build.gradle 오른쪽 클릭 - > gradle -> refresh gradle projects (바꾼 내용을 저장하겠다는 의미)
+3. 이클립스 좌측에 build.gradle 클릭  -> dependencies 아래줄에 복붙 , 저장 -> build.gradle 오른쪽 클릭 - > gradle -> refresh gradle projects (바꾼 내용을 저장하겠다는 의미) (우측 하단에 다운로드바 확인)
 
 이렇게 설정하면 컴파일 (ctrl + f11) 하지 않아도 
 자동으로 변경 사항을 인식한다 (코드 변경시 저장만 해주기)
 
 ```
 
-### `getter, setter` 설정해주는 기능
+### `getter, setter 설정해주는 기능`
+
+`방법1`
+```
+@Getter , @Setter 를 상단에 적어주면 끝
+```
+
+`방법2`
 ```
 1. spring lombok gradle 검색 - 첫번째 사이트 접속
 
@@ -162,20 +168,22 @@ controller : url 요청을 받는 곳. 스프링이 클래스는 url을 요청�
 
 3. 2번 내용 복붙하고 dependencies에 붙여넣기 (어떤 기능인지 주석처리 해주면 좋다)
 
-4. refresh 해주고 import해주면 됨 
+4. refresh 해주고 import
+
+5. VO 클래스의 메소드 상단에 @Data 써주면 된다.
 
 ```
-* 또 다른 방법 @Getter , @Setter 대신 @Data 써줘도 된다.
+### => 이 기능들을 start.spring.io 사이트에서 설치시 ADD DEPENDENCIES을 통해 일괄로 설치할 수 있다. 
 
 ---
-### `lombok 오류` 해결 방법 1
+### `lombok 오류 해결 방법 1`
 ```
  help -> install new software -> add -> name : lombok -> location : https://projectlombok.org/p2 -> lombok 체크 박스 체크 -> next -> accept -> finish -> 이클립스 재실행
 ```
 
-### 만약 안된다면? ↓
+### * 만약 안된다면? ↓
 
-### `lombok 또 다른 오류` 해결 방법 2
+### `lombok 또 다른 오류 해결 방법 2`
 ```
 1. 구글에 '이클립스 lombok 인식' 검색하고 관련 글의 블로그에 올려둔 파일(lomboc.jar) 설치하면 된다.
 
@@ -185,17 +193,17 @@ controller : url 요청을 받는 곳. 스프링이 클래스는 url을 요청�
 5. quit install하고 이클립스 재실행   
 ```
 
-### @AllArgsConstructor
+### `@AllArgsConstructor`
 
 @AllArgsConstructor : 자동으로 생성자를 만들어줌
 
 ### `패키지 만들기`
 ```
-com.example.first_spring 안에 com.example.first_spring.controller 패키지 만들고 
+com.example.first_spring 안에 com.example. first_spring.controller 패키지 만들고 
 안에 com.example.first_spring.vo 패키지 만들기
 ```
 
-### VO / DTO 클래스
+### `VO / DTO 클래스`
 getter, setter만 있는 클래스를 말한다. ex) UserVO
 
  
