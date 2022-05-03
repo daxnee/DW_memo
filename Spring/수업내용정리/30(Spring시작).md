@@ -192,7 +192,6 @@ controller : url 요청을 받는 곳. 스프링이 클래스는 url을 요청�
 4. 체크 박스 선택하고 설치
 5. quit install하고 이클립스 재실행   
 ```
-
 ### `@AllArgsConstructor`
 
 @AllArgsConstructor : 자동으로 생성자를 만들어줌

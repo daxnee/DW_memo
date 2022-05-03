@@ -90,7 +90,7 @@ public class MainService {
 	        list.add(new UserVO("백윤식",75,"서울"));
 	        int count = 0;
 	        for(int i=0; i<list.size(); i++) {
-	        	String name = list.get(i).getName().substring(0,1);
+	        	String name = list.get(i).getName().substring(0,1); // 0번째 인덱스부터 1글자
 	        	if(name.equals("이")) {
 	        		count++;
 	        	}
