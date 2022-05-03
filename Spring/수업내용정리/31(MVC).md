@@ -18,7 +18,7 @@ sts 사이트에서 add dependencies 검색 기능으로 lombok과 같은 기능
 
 - `V : View`
     - 최종 사용자에게 결과를 화면(UI)로 보여줌
-	
+
 - `C : Controller`
     - url 요청을 받아서 화면과 Model을 연결시켜주는 역할
 
