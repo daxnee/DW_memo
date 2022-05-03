@@ -13,7 +13,7 @@ import com.example.first_spring.vo.UserVO;
 
 @RestController // 1번순서
 public class ActorController {
-	@Autowired // 2번순서
+	@Autowired // 3번순서
 	private MainService service; //2번순서
 	
 	@GetMapping("/actor/list")
