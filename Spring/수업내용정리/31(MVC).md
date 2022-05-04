@@ -7,14 +7,14 @@ sts 사이트에서 add dependencies 검색 기능으로 lombok과 같은 기능
 ```
 
 ### `MVC 아키텍쳐(Model-View-Controller)` *** 
-: 프로그래밍 로직을 `서로 영향 없이 쉽게 고칠 수 있는` 소프트웨어 디자인 패턴 
+: 프로그래밍 로직을 `서로 영향 없이 쉽게 고칠 수 있는` 소프트웨어 디자인 패턴
 
 `등장배경` : spring 이용시, 문제를 풀 때 마다 controller에 코드가 길어짐 => `유지보수가 힘들었음`
 
 => 그래서 `MVC 아키텍쳐`가 등장 (spring이 오랫동안 사용할 수 있는 이유가 됨.)
 
 - `M : Model`
-    - `비즈니스 로직(서비스)` , `DB 연동 로직` 두가지로 나뉘어짐. 여기서  `로직 구현`
+    - `비즈니스 로직(서비스)` , `DB 연동 로직(Mapper)` 두가지로 나뉘어짐. 여기서  `로직 구현`
 
 - `V : View`
     - 최종 사용자에게 결과를 화면(UI)로 보여줌
@@ -24,13 +24,13 @@ sts 사이트에서 add dependencies 검색 기능으로 lombok과 같은 기능
 
 ### `Spring 3대장`
 ### 1. `IOC(Inversion of Control)` 
-```
-@Autowired // new로 인스턴스화 할 필요가 없게 된다. ***기술면접빈출
+스프링이 제어하는 클래스를 `bean` 이라고 한다.
+	- `bean` : 생성부터 소멸까지 관리해 주는 class
+
 
 @Autowired : Spring이 해당 객체(클래스)를 관리해줌 (new로 인스턴스화 할 필요가 없게 된다) 
-
+- new로 인스턴스화 할 필요가 없게 된다. ***기술면접빈출
 @Autowired 쓰면 불러올 클래스에도 @Service가 있어야 한다.
-```
 
 
 ### 2. `DI(Dependency Injection)`
