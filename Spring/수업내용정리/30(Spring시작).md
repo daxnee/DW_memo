@@ -178,7 +178,7 @@ controller : url 요청을 받는 곳. 스프링이 클래스는 url을 요청�
 ---
 ### `lombok 오류 해결 방법 1`
 ```
- help -> install new software -> add -> name : lombok -> location : https://projectlombok.org/p2 -> lombok 체크 박스 체크 -> next -> accept -> finish -> 이클립스 재실행
+ help -> install new software -> add -> name : lombok -> location : https://projectlombok.org/p2 -> add -> lombok 체크 박스 체크 -> next -> accept -> finish -> 이클립스 재실행
 ```
 
 ### * 만약 안된다면? ↓
