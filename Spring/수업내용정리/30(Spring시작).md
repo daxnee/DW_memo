@@ -22,11 +22,9 @@ java -> spring
 
 ---
 ### `Spring이란?`
-```
-- Java로 다양한 어플리케이션 (웹 or 앱)을 만들기 위한 프레임워크
-쉽게 생각해서 플랫폼 == 프레임워크
-    - 이 프레임워크가 Spring을 말한다.
-```
+- `Java`로 다양한 어플리케이션 (웹 or 앱)을 만들기 위한 `프레임워크`
+    - 쉽게 생각해서 `플랫폼` == `프레임워크`
+
 ### `Spring 종류`
 ```
 1. Spring 레거시 (일반 Spring)
@@ -42,20 +40,35 @@ java -> spring
     (why? 데이터베이스, 고객에게 보여줄 화면 등등이 필요하다)
 
 1. 데이터베이스 연결과 데이터 생성, 호출, 삭제, 수정을 도와주는 `ORM` 
-- ORM? Object-relational mapping (객체 관계 매핑)
+- ORM? Object-relational mapping (객체 관계 매핑), spring과 DB를 연결해주는 역할
 
-    - MyBatis(우리가 배울 것), JPA
+    - MyBatis(우리가 배울 것) 
+    - JPA
 
 2. 필요한 기능을 쉽게 다운로드 받을 수 있고, 서버에 업로드(배포)를 도와주는 *'빌드관리도구'*(Build Tool)
-    - Gradle(우리가 배울 것), Maven
+    - Gradle(우리가 배울 것) : **Gradle은 프로그래밍 언어다
+    - Maven
     
 3. 화면을 도와주는 *'템플릿 엔진'*
-    - JSP, Thymeleaf(우리가 배울 것)
+    - JSP 
+    - Thymeleaf(우리가 배울 것)
 
     API식으로 데이터를 전달하는 방법도 있음 
 
 4. 속성(데이터베이스 주소, 아이디, 비번) 정의를 담당하는 *'속성 파일'*!
-    - yaml(야믈)(우리가 배울 것), properties 
+    - yaml(야믈)(우리가 배울 것)
+    - properties 
+        - resourse 안에 application.properties 가 있고 
+        스프링 부트 안에 디폴트로 properties가 들어있다.
+        * 여기에 자바와 관련 없는 것들(html, css, js, img 등등)을 넣어줄 것임
+
+        help - Eclipse Marketplace - find에서 검색 - yaml -  yaml Editor 1.9.0 설치 - 재시작 
+
+        sql 접속 정보 설정 
+        resourse 에 패키지 생성 sqlmap -> xml - mxlflie - 파일 이름 : sqlmapper_emp.xml (_ 다음엔 내가 설계할 테이블 이름이 온다.) - finish
+         - 생성된 파일에 sql쿼리를 작성하면 됨(Source)
+
+        - 아까 만들어놓은 야믈 파일에 sql위치를 작성해준다
 
 5. 서버를 담당하는 Tomcat (서버에 올리고 다운되지 않게 관리해주는 프로그램)
     - Tomcat 하나 밖에 없다.
@@ -82,7 +95,7 @@ ide 상단바에 window -> prefenrences -> encoding 검색 -> workspace 선택 -
 window - preferences - general - Apperance - color and fonts - basic - text Font - edit - 폰트와 크기 설정
 ```
 
-3. `빌드관리도구` 설치
+3. `빌드관리도구` `Gradle` 설치 (빌드 tool)
 ```
 1) start.spring.io 접속 -> Gradle - Java -  Spring Boot2.6.7 - Artifact(이름 설정) : 프로젝트 이름이 됨(first-spring으로 이름 설정함) - java 버전 11로 선택(현재 쓰고 있는 자바보다 높은 버전은 사용이 불가능. 학원에서는 12를 쓰고 있으니까 그 아래로 설정하기) - add Dependencies 클릭 - spring wep 클릭 - Generate - 다운로드 받은 알집 파일 spring workspace에 파일 두고  '여기에 압축 풀기' 실행 (*파일 추가로 생성되지 않게 주의해서 압축풀기!)
 
@@ -112,22 +125,25 @@ ex) com.naver.www
 
 ```
 첫번째 패키지 : com. io. kr 등등
-두번째 패키지 : 회사이름(조직이름)
+두번째 패키지 : 회사이름(조직이름) ex) naver
 세번째 패키지 : www가 아닌 프로젝트명을 기재해준다. (www 안씀)
 ```
-### `controller`
-- controller 패키지 생성
-```
-controller : url 요청을 받는 곳. 스프링이 클래스는 url을 요청받는 곳이야~ 라고 인식해줌, 이름이 controller로 끝나는 파일만 모여 있음.
-```
+### `controller` 패키지(로직 구현 x)
+- controller : `url 요청을 받는 곳`. 스프링이 클래스는 url을 요청받는 곳이야~ 라고 인식해줌, 이름이 controller로 끝나는 파일만 모여 있음.
 
-- controller 설정해주기
+
+###  `controller 설정해주기`
 ```
 : @Controller + import (ctrl + shift + o) 해주면 됨 
 - getMapping으로 url을 설정해주고 , 주소창에 해당 로컬주소 + 설정한 url 검색하면 내가 설정한 메소드 실행결과가 나온다.
     * getMapping : http 메소드 중 get으로 요청한 것임!
     * http : spring 결과를 하이퍼텍스트로 전송해주겠다
 ```
+---
+### `Service` 패키지(로직 구현)
+서비스와 관련된 패키지만 올 수 있음
+: @Service : 로직 구현이 실행될거야 라고 스프링한테 알려주는 것
+
 ### `localhost`
 내 ip의 결과창을 보고 싶다면 이렇게 검색해도 된다. `localhost:8080/설정한 url`
  
@@ -148,7 +164,6 @@ controller : url 요청을 받는 곳. 스프링이 클래스는 url을 요청�
 자동으로 변경 사항을 인식한다 (코드 변경시 저장만 해주기)
 
 ```
-
 ### `getter, setter 설정해주는 기능`
 
 `방법1`
@@ -205,8 +220,27 @@ com.example.first_spring 안에 com.example. first_spring.controller 패키지 �
 ### `VO / DTO 클래스`
 getter, setter만 있는 클래스를 말한다. ex) UserVO
 
+
+
+
+### 클래스 만드는 순서
+1. 매퍼 
+2. vo 만들고 
+3. 마이바티스
+4. 서비스
+5. 컨트롤러
+
  
 
 
 
+### `이클립스 -> github push 방법`
+```
+이클립스 우측 상단 Git 아이콘 클릭 -> git repositories 우클 -> commit -> 커밋할 내용들 확인 -> ++ 버튼(내용 전부 다 클릭) -> commit -> git repositories 우클 -> push to origin -> close
+
+*만약 Git Repositories 안 보이면 상단 window -> Show view -> 메뉴 선택 
+```
+
+### `github -> 이클립스 pull 방법`
+파일 clone 받고 - 노트북 이클립스에 import 
 
