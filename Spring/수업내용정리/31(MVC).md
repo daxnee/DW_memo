@@ -14,7 +14,7 @@ sts 사이트에서 add dependencies 검색 기능으로 lombok과 같은 기능
 => 그래서 `MVC 아키텍쳐`가 등장 (spring이 오랫동안 사용할 수 있는 이유가 됨.)
 
 - `M : Model`
-    - `비즈니스 로직(서비스)` , `DB 연동 로직(Mapper)` 두가지로 나뉘어짐. 여기서  `로직 구현`
+    - `비즈니스 로직(Service)` , `DB 연동 로직(Mapper(Interface))` 두가지로 나뉘어짐. 여기서  `로직 구현`
 
 - `V : View`
     - 최종 사용자에게 결과를 화면(UI)로 보여줌
