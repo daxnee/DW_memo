@@ -51,6 +51,7 @@ java -> spring
 3. 화면을 도와주는 *'템플릿 엔진'*
     - JSP 
     - Thymeleaf(우리가 배울 것)
+    - React, View 등등 
 
     API식으로 데이터를 전달하는 방법도 있음 
 
