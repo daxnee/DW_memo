@@ -1,0 +1,154 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.first_spring.mapper.EmpMapper">
+	<select id="getEmpList" resultType="EmpVO"> <!--  resultType="EmpVO : 리턴타입이 EmpVO -->
+		<!-- id : 메소드이름 -->
+<!-- MyBatis에게 Mapper 경로를 적어야 한다. -->
+<!-- 대소문자 구분 안함. 대신 오타 주의 -->
+		SELECT
+			empno,
+			ename,
+			job
+		FROM emp
+	</select>
+	
+	<select id="SelectEmpSal" resultType="EmpVO">
+	select
+	*
+	from emp
+	where job = "SALESMAN" 
+		and 
+		sal >= #{sal}
+	</select>
+	
+	<select id="selectEmpMaxSal" resultType="EmpVO">
+	--  문제 3. 급여가 가장 높은 사원 조회
+	select
+	ENAME,
+	sal 
+	from (
+		select 
+			max(sal) as maxSal
+			from emp
+			where date_format(HIREDATE, '%m') = #{HIREDATE}
+		)as e,
+		emp
+		where sal = e.maxSal
+		and date_format(HIREDATE,'%m') = #{HIREDATE} 
+	</select>
+	
+	<select id="selectEmpMax" resultType="EmpVO">
+	select
+	ENAME,
+	sal
+	from 
+	emp
+	where date_format(HIREDATE, '%m') = '12'
+	</select>
+		
+
+	
+	<select id="getEmpName" resultType="EmpVO">
+	SELECT
+	*
+	FROM emp
+	WHERE ename LIKE "%LL%";
+	</select>
+	
+	<select id="getEmpComm" resultType="EmpVO">
+	SELECT
+		ename,
+		comm
+	FROM emp
+	WHERE 
+		comm is null; 
+	</select>
+	
+	<select id="getEmpHireDate" resultType="EmpVO">
+	select
+	ename,
+	hiredate
+	FROM emp
+	WHERE hiredate between "1980-12-17" AND
+	"1982-01-23"; 
+	</select>
+	
+	<select id="getEmp" resultType="EmpVO">
+	select
+		*
+	FROM emp
+	WHERE 
+		empno = #{empNo}
+	</select>
+	
+	<select id="selectEmpWhereJobAndSal" resultType="EmpVO">
+	select
+		empno,
+		ename,
+		job,
+		comm
+	from emp
+	WHERE
+		job = #{job} 
+	AND
+		sal >= #{sal}
+	</select>
+	
+	<select id="selectEmpHowSal" resultType="EmpVO">
+	select
+	ENAME,
+	SAL 
+	FROM emp
+	WHERE DEPTNO in (10,30)
+	and SAL > #{sal}
+	</select>
+	
+	
+	<select id="selectEmpMgr" resultType="EmpVO">
+	select
+	*
+	FROM emp
+	WHERE MGR is null;
+	</select>
+	
+	<select id="selectEmpHiredate" resultType="EmpVO">
+	SELECT
+		*
+	FROM emp
+	WHERE DATE_FORMAT(HIREDATE,'%Y') = #{hiredate};
+	
+	</select>
+	
+	 <!-- 220509 -->
+	 <!-- insert -->
+	 <!-- Oracle은 Mybatis Insert 할 때 PK문법이 다름(시퀀스를 추가해야함) -->
+	<insert id="insertEmp">
+	
+	INSERT INTO emp
+	(
+		empno,
+		ename,
+		deptno,
+		hiredate
+	) 
+	VALUES
+	(
+		#{empno},
+		#{ename},
+		#{deptno},
+		now()
+	)
+	</insert>
+	
+	<delete id="deleteEmp">
+	DELETE FROM emp
+	WHERE empno = #{empno}
+	</delete>
+	
+	<update id="updateEmp">
+	update emp
+	set 
+		comm = #{comm}
+		where empno = #{empno}
+	</update>
+	
+</mapper>
