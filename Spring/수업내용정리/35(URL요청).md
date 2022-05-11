@@ -62,8 +62,7 @@
     www.naver.com/naver/news/ (x)
 	www.naver.com/naver/news (O)
 
-ex) @PatchMapping("/emp") => restful
-
+	ex) @PatchMapping("/emp")
 ```
 
 ### `2. QueryString` 
@@ -124,17 +123,37 @@ between : 결과 갖고 오기 전에 특정 범위만 가져옴  (where 조건�
 
 ### 0510 문제1번 리뷰
 ### 1. emp에 없는 부서번호(40)를 찾아서 @postMapping으로  해당 부서번호로 insert하기 (mapper가 2개로 설정되어 있음)
+
 `step0. UserVO에 상속 설정하기 (dept데이터를 써야하니까)`
 ```java
 public class EmpVO extends DeptVO { // 이러면 deptVO의 필드변수를 사용할 수 있음
-필드변수 ~
+private int empno; 
+//* 필드변수의 디폴트는 int =0 / String = null인 것을 잊지 말기(set해야 값이 들어감)
 }
 
 ```
 
 `step1. sql 쿼리문 짜서 xml에 설정하기`
 ```sql 
+-- insert하는 쿼리
+	INSERT INTO emp
+	(
+		empno,
+		ename,
+		deptno,
+		hiredate
+	) 
+	VALUES
+	(
+		#{empno},
+		#{ename},
+		#{deptno},
+		now()
+	)
+	</insert>
 
+
+-- emp에 부서번호 없는 데이터 select하는 쿼리
 	select 
 		d.deptno
 	from emp as e 
@@ -143,12 +162,13 @@ public class EmpVO extends DeptVO { // 이러면 deptVO의 필드변수를 사�
 	where 
 		e.deptno is null 
 ```
-왜 return 타입을 list<EmpVO>가 아닌 EmpVO로 할까?
+`- 여기서 잠깐, 왜 return 타입을 list<EmpVO>가 아닌 EmpVO로 할까?`
 ```
-=> 쿼리문의 출력값이 단일행이다 (내 DB는 다중행이긴 함 40 ,60)
-그래서 클래스로 타입을 받아주는 것임
-- int,String보다  empvo로 받아야 범용성이 좋아짐 
-그 후에 서비스가 안정화되면 int나 String으로 바꿔주면 됨
+1. 쿼리문의 출력값이 단일행이다 (현재 내 DB는 다중행이긴 함 40 ,60)
+   그래서 클래스로 타입을 받아주는 것임
+
+2. int,String보다 empvo로 받아야 범용성이 좋아짐 
+   그 후에 서비스가 안정화되면 int나 String으로 바꿔주면 됨
 ```
 
 `step2. mapper 메소드 만들기 ` 
@@ -159,14 +179,18 @@ public int insertEmp(EmpVO empVO); // 데이터 insert하는 목적
 `step3. service 로직짜기`
 ```java
 	@Transactional(rollbackFor = {Exception.class})
-	public int setEmpInfo(EmpVO empVO) {
+	public int setEmpInfo(EmpVO vo) { //
+		
 		//1. 없는 부서번호(40)를 찾아주는 작업
-		EmpVO vo = empMapper.selectDeptNo();
-		int deptNo = empVO.getDeptno();
+		EmpVO empVO = empMapper.selectDeptNo();
+		int deptNo = empVO.getDeptno(); // 부서번호 40인 애들을 변수에 대입
 		vo.setDeptno(deptNo);
-		// --- 부서 번호 40을 찾았고
+		// --- deptNo(40)을 vo에 set해준다. why? EmpVO에서 갖고 온 필드변수 deptno는 현재 디폴트 값이 0이니까 set해줘야 함 
+
 		//2. insert 해야함
-		int rows = empMapper.insertEmp(empVO); // 몇 행 insert 되었는지 리턴 
+		int rows = empMapper.insertEmp(empVO); 
+		// insertEmp(insert하는 메소드)에 객체 넣어줌
+		// 몇 행 insert 되었는지 리턴 
 		return rows;
 	}
 ```
@@ -181,19 +205,24 @@ post -> body -> raw
 }
 
 출력값 :  emp에 없는 부서번호로 insert가 된다(디비버 데이터)
+```
 ---
 
-### pk로 조회하는건 무조건 단일행 = list 일수가 없다!
+### `pk로 조회하는건 무조건 단일행 == list 일수가 없다!`
+```
 ex) 주민번호, 핸드폰번호로 조회하면 1명만 나오는 것!
 
 pk가 아닌 다른 컬럼으로 조회했다면 list로 받으면 된다.
+```
 
-
-### delete할때 주의점(where)
+### `delete할때 주의점(where)`
+```
 delete시 pk설정하지 않으면 where 조건에 해당되는 컬럼들이 전부 다 지워진다.
 
 ```
-
 ### xml에서 트랜잭션일때(insert, update, delete)만 resultType을 안 넣는다 (select는 넣음)
 
 
+
+
+--- 
