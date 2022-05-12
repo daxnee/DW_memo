@@ -2,11 +2,7 @@
 ### `HashMap 다시 이해하기`
 
 
-
-
-### `list vs map (실무)`  (spring vo vs map => 구글링해서 차이점 알아두기)
-
-### `Spring VO(DTO) vs Map`
+### `list vs map (실무)`  (spring vo vs map => 구글링해서 차이점 알아두기)### `Spring VO(DTO) vs Map`
 --- 
 ```
 실무시 list안에 vo(EmpVO)가 없으면 Hashmap을 쓰는거라고 생각하자!
@@ -87,3 +83,33 @@ why? MyBatis가 다 해주니까!
        만약 내가 실수로 잘못된 데이터를 put해버렸다? => 그러면 데이터가 변경되니까 큰일남
 장점 : VO클래스에 미리 필드변수를 정의해서 문서화, 유지보수 가능
 ```
+
+
+### 로그 : 이벤트에 대한 기록
+컨트롤러에서 요청 받을 때랑 
+
+에러도 이벤트다.
+
+
+### 포스트맨에 send 날리면 로그 기록이 남는다 = logback
+설치방법 : resources파일에 logback.xml 파일 복붙 -> 컴파일
+그걸 보고 어떤 에러인지 쉽게 알 수 있다
+
+
+### 배너 만들기
+```
+src/main/resources  -> new -> other -> General -> File -> Next ->  banner.txt -> 파일 생성 -> 커스텀한 텍스트와 글자 복붙,저장,실행
+
+
+     _                                    
+    | |                                   
+  __| | _____  _   _  ____   _____  _____ 
+ / _  |(____ |( \ / )|  _ \ | ___ || ___ |
+( (_| |/ ___ | ) X ( | | | || ____|| ____|
+ \____|\_____|(_/ \_)|_| |_||_____)|_____)
+                                          
+${application.title} ${application.version}
+Powered by Spring Boot ${spring-boot.version}
+
+```
+
