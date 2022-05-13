@@ -1,5 +1,138 @@
 ### 220512
 ### `HashMap 다시 이해하기`
+```java
+package test;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+class EmpVO{
+	private int empno;
+	private String ename;
+	public int getEmpno() {
+		return empno;
+	}
+	public void setEmpno(int empno) {
+		this.empno = empno;
+	}
+	public String getEname() {
+		return ename;
+	}
+	public void setEname(String ename) {
+		this.ename = ename;
+	}
+}
+
+class 햄버거{
+	private String 햄버거이름;
+	private int 햄버가격;
+	private String 매장이름;
+	public String get햄버거이름() {
+		return 햄버거이름;
+	}
+	public void set햄버거이름(String 햄버거이름) {
+		this.햄버거이름 = 햄버거이름;
+	}
+	public int get햄버가격() {
+		return 햄버가격;
+	}
+	public String get매장이름() {
+		return 매장이름;
+	}
+	public void set매장이름(String 매장이름) {
+		this.매장이름 = 매장이름;
+	}
+	public void set햄버가격(int 햄버가격) {
+		this.햄버가격 = 햄버가격;
+	}
+}
+
+
+public class 긴급점검50 {
+	// List와 Map을 알아보자!
+	public static void main(String[] args) {
+		ArrayList<String> list = new ArrayList<String>();
+		
+		List<String> list2 = new ArrayList<String>(); //자식이(ArrayList) 부모(List)에 대입도 가능
+		list2 = new LinkedList<String>(); // 재활용때문에 부모에 대입해준다
+		list2.add("hello");
+		// Spring에선 쿼리에서 나온 결과를 MyBatis가 list에 넣어주는 것 (list2.add 역할)
+
+		
+		List<햄버거> list3 = new ArrayList<햄버거>();
+		햄버거 불고기버거 = new 햄버거();
+		불고기버거.set햄버가격(3000);
+		불고기버거.set햄버거이름("불고기버거");
+		불고기버거.set매장이름("선화점");
+		list3.add(불고기버거);
+		System.out.println(불고기버거.get매장이름());
+		
+		// ---- list도 클래스
+		// 포인트는 제네릭 안에 컬렉션도 포함됨
+		// 컬렉션도 클래스니까!
+		List<ArrayList<String>> list4 = new ArrayList<ArrayList<String>>(); // 그래서 이것도 가능하다(쓰진 않음)
+		
+		Map<String, Object> 불고기 = new HashMap<String, Object>(); //위에 있는 햄버거 생성자를 쓰고 싶다면 자식에 부모를 대입해주면 된다.
+		불고기.put("햄버거종류", "불고기버거"); // 그러면 이렇게도 가능함
+		불고기.put("햄버거가격", 2000);
+		불고기.put("매장이름", "선화점");
+		
+		//maplist 0번째에 햄버거 이름과 가격을 추가
+		List<Map<String, Object>>  mapList = new ArrayList<Map<String, Object>>();
+		Map<String, Object> 치킨 = new HashMap<String, Object>();
+		치킨.put("햄버거이름", "치킨버거");
+		mapList.add(불고기);
+		치킨.put("햄버거가격", 3000);
+		mapList.add(치킨);
+		System.out.println(mapList.get(0));
+		System.out.println(mapList.get(1));
+		System.out.println(mapList.get(1).get("햄버거이름"));
+		
+		
+		
+		// vo을 담는 list
+		List<EmpVO> empList = new ArrayList<EmpVO>();
+		EmpVO emp = new EmpVO();
+		emp.setEmpno(7369);
+		emp.setEname("양다은");
+		empList.add(emp);
+				
+		
+		
+		
+		
+		
+		
+		// ------------------
+		// map을 담는 list
+		List<EmpVO> empList = new ArrayList<EmpVO>();
+		EmpVO vo =  new EmpVO();
+		vo.setEmpno(1);
+		vo.setEname("양다은");
+		empList.add(vo);
+		
+		List<Map<String, Object>> empMapList = new ArrayList<Map<String, Object>>();
+		Map<String, Object> 사원 = new HashMap <String, Object>();
+		사원.put("사원번호", 1); // put 해주고
+		사원.put("사원이름", "양다은");
+		empMapList.add(사원); // list에 넣기 
+		System.out.println(사원);
+		// list과 hashmap 공통점 : 추가 (add) 해준다는 점
+		
+		
+		// put과 add를 마이바티스가 해준다
+		
+	}
+
+}
+
+
+
+
+```
 
 
 ### `list vs map (실무)`  (spring vo vs map => 구글링해서 차이점 알아두기)### `Spring VO(DTO) vs Map`
@@ -68,7 +201,7 @@ why? MyBatis가 다 해주니까!
 
 => 쉽게 말해 번거로움의 차이!
 ```
-### `데이터 조작 언어에 따라 List에 담는 Map과 VO가 결정된다(정답은 없음)`
+### `데이터 조작 언어에 따라 List에 담긴게 Map인지 VO인지 결정된다(정답은 없음)`
 ---
 ### `SELECT 사용시 : map`
 ```
@@ -85,21 +218,22 @@ why? MyBatis가 다 해주니까!
 ```
 
 
-### 로그 : 이벤트에 대한 기록
-컨트롤러에서 요청 받을 때랑 
+### `로그 : 이벤트에 대한 기록`
+```
+로그 : 프로그램 개발이나 운영 시 발생하는 문제점(이벤트)을 추적 하거나 운영 상태를 모니터링 하는 정보를 기록하는 것
+	*에러도 이벤트임
+```
 
-에러도 이벤트다.
-
-
-### 포스트맨에 send 날리면 로그 기록이 남는다 = logback
+### `포스트맨에 send 하면 남는 log 기록 == logback`
+```
 설치방법 : resources파일에 logback.xml 파일 복붙 -> 컴파일
 그걸 보고 어떤 에러인지 쉽게 알 수 있다
-
-
-### 배너 만들기
 ```
-src/main/resources  -> new -> other -> General -> File -> Next ->  banner.txt -> 파일 생성 -> 커스텀한 텍스트와 글자 복붙,저장,실행
+### `banner 만들기`
+```
+src/main/resources  -> new -> other -> General -> File -> Next ->  banner.txt -> 파일 생성 -> 커스텀한 텍스트와 글자 복붙,저장,컴파일
 
+ex)
 
      _                                    
     | |                                   

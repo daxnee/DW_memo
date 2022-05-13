@@ -7,13 +7,10 @@
 ```
 => `AUTO COMMIT 여부`
 ```
-
-
 ### 2. MyBatis INSERT, DELETE, UPDATE
 ```
 => `자동으로 COMMIT!` (그래서 로직 짤 때 잘해야만 실수가 발생하지 않는다.)
 ```
-
 
 ### 3. MyBatis INSERT, DELETE, UPDATE에서의 return은 결과 수를 리턴한다.(int)
 ```
@@ -58,7 +55,6 @@ post : 데이터를 body에 심어서 보내줌 (private) ex) 회원가입 정�
 		 
 		return 0;
 	}	
-
 ```
 2. postman 
 ``` 

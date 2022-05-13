@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       
+             * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .container {
+        width: 1200px;
+        margin: 50px auto;
+      }
+      .emp-table {
+        width: 100%;
+        height: 400px;
+        box-shadow: 0 3px 7px grey;
+        background-color: #ffffff;
+      }
+      tr {
+        border: 1px solid #444444;
+      }
+      tr:nth-child(even) {
+        background-color: #eaeaeb;
+      }
+      thead {
+        box-shadow: 0 1px 5px grey;
+      }
+      th {
+        padding: 1rem 2rem;
+        letter-spacing: 0.4rem;
+        font-size: 16px;
+        font-weight: 800;
+        text-align: center;
+      }
+      td {
+        font-size: 14px;
+        padding: 1rem 2rem;
+        text-align: center;
+      }
+      a{
+          cursor: pointer;
+      }
+
+      .emp-enroll{
+          margin: 20px auto;
+          text-align: center;
+
+      }
+
+      .emp-enroll button{
+          padding: 2%;
+          cursor: pointer;
+          font-size: 20pt;
+      }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>EMP 사원리스트</h1>
+        <table class="emp-table">
+         <thead>
+             <tr>
+                 <th>사원 번호</th>
+                 <th>사원 이름</th>
+                 <th>직업</th>
+                 <th>급여</th>
+                 <th>입사 날짜</th>
+                 <th>부서 이름</th>
+                 <th>근무 지역</th>
+             </tr>
+         </thead>
+         <tbody id="data"></tbody>
+        </table>
+        <div class="emp-enroll">
+            <button id="btn" type="button">사원 추가</button> 
+            <button id="btn-update" type="button">사원 수정</button> 
+        </div>
+    </div> 
+    
+</body>
+<!-- jquery download -->
+<!-- AJAX는  Jquery에 있는 기능(함수) -->
+<script
+src="https://code.jquery.com/jquery-3.6.0.min.js"
+integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+crossorigin="anonymous"></script>
+<script>
+
+    //문제1. 부서번호가 30번인 사람 수 카운트
+           var len = response.length;
+           var count = 0;
+           for(var i=0; i<len; i++){
+           deptno =  response[i].deptno;
+           if(deptno == 30){
+               count++;
+            }
+            
+        }
+        console.log('부서 30번 사원 : '+count + '명') -->
+
+
+    $.ajax({
+        url : 'http://localhost:8080/emp',
+        type : 'GET',
+        dataType : 'json',
+        success : function(response){ //(파라미터 변수 이름이라 임의로 지정가능)
+        console.log(response); // 전체 사원 찍어보기    
+        let html = "";
+        for(var i=0; i<response.length; i++){
+            
+            html += 
+            '<tr><td><a onclick=removeEmp('+response[i].empno+')>'
+                +response[i].empno+
+                '</td><td>'
+                +response[i].ename+
+                '</td><td>'
+                +response[i].job+
+                '</td><td>'
+                +response[i].sal+
+                '</td><td>'
+                +response[i].hiredate+
+                '</td><td>'
+                +response[i].dname+
+                '</td><td>' 
+                +response[i].loc+
+                '</td></tr>' 
+        }
+        $('#data').append(html);
+        
+        },
+
+        error : function(request, status, error){
+        console.log("에러 내용은 ==> " + error);
+        },
+    });
+
+
+    //사원삭제
+    function removeEmp(empNo){ // 내가 클릭한 사원의 번호가 파라미터에 대입
+        if(confirm("정말 사원을 삭제하시겠습니까?")){ // confirm = boolean형/ 확인 누르면 삭제가 됨 
+        $.ajax({
+            url : 'http://localhost:8080/emp/empno/' + empNo,
+            type : 'delete',
+            dataType : 'json',
+            success : function (response){
+       
+                console.log(response);
+                // 새로고침 f5
+                location.reload();
+            }
+        });
+    }
+}
+
+
+//클릭 함수 안에 있어서 문자로 인식하는건가 아니면 모든게 다 인식하는 건가
+
+    // 사원 추가
+    $('#btn').click(function(){
+        let jsonData = {
+        "empno" : 1150,
+        "ename": "숭늉",
+        "job" : "MANAGER",
+        "deptno" : 20 // 이미 업데이트 완료
+
+    };
+    
+    $.ajax({
+            url : 'http://localhost:8080/emp',
+            type : 'POST',
+            contentType : "application/json", // contentType : 서버에게 json으로 요청한다
+            dataType : 'json', // dataType : 서버의 결과를 json으로 응답 받는다
+            data : JSON.stringify(jsonData), // 서버에서 위 jsonData을 문자열로 인식해서 이렇게 해줘야 찐 json이 됨
+            success : function (response){
+                console.log(response);
+            }
+        });
+        // alert("버튼 클릭!")
+    });
+
+//사원수정
+$('#btn-update').click(function(){
+    let jsonData = {
+        "job" : "MANAGER",
+        "sal" : 5000
+    };
+    let empno = 7902; // empno는 파라미터로 받는다(controller 참고)
+    
+    $.ajax({
+            url : 'http://localhost:8080/api/v1/emp/'+ empno, // controller 주소
+            type : 'PATCH', // http 메소드 (get,delete,post,patch)
+            contentType : "application/json", // contentType : 보낼 때 json으로 
+            dataType : 'json', // dataType : return값을 json으로 보낼 때
+            data : JSON.stringify(jsonData), //  서버에서 위 jsonData을 문자열로 인식해서 이렇게 해줘야 찐 json이 됨
+            success : function (response){
+                console.log(response);
+            }
+        });
+
+});
+
+</script>
+</html> 
+      
+	</delete>

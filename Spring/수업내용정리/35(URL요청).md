@@ -162,7 +162,7 @@ private int empno;
 	where 
 		e.deptno is null 
 ```
-`- 여기서 잠깐, 왜 return 타입을 list<EmpVO>가 아닌 EmpVO로 할까?`
+##### ` * 여기서 잠깐, 왜 return 타입을 list<EmpVO>가 아닌 EmpVO로 할까?`
 ```
 1. 쿼리문의 출력값이 단일행이다 (현재 내 DB는 다중행이긴 함 40 ,60)
    그래서 클래스로 타입을 받아주는 것임
@@ -220,7 +220,7 @@ pk가 아닌 다른 컬럼으로 조회했다면 list로 받으면 된다.
 delete시 pk설정하지 않으면 where 조건에 해당되는 컬럼들이 전부 다 지워진다.
 
 ```
-### xml에서 트랜잭션일때(insert, update, delete)만 resultType을 안 넣는다 (select는 넣음)
+
 
 
 
