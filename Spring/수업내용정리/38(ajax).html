@@ -95,6 +95,13 @@ crossorigin="anonymous"></script>
 <script>
 
     //문제1. 부서번호가 30번인 사람 수 카운트
+    $.ajax({
+        url : 'http://localhost:8080/emp/count',
+        type: 'GET',
+        dataType : 'json',
+        success: function (response){
+        // response : 변수이름
+
            var len = response.length;
            var count = 0;
            for(var i=0; i<len; i++){
@@ -102,11 +109,17 @@ crossorigin="anonymous"></script>
            if(deptno == 30){
                count++;
             }
-            
         }
-        console.log('부서 30번 사원 : '+count + '명') -->
+        console.log('부서 30번 사원 : '+count + '명') 
+    },
+    error : function(request, status, error){
+        console.log("에러 내용은 ==> " + error);
+        },
+    });
 
 
+
+    // 
     $.ajax({
         url : 'http://localhost:8080/emp',
         type : 'GET',
@@ -134,7 +147,6 @@ crossorigin="anonymous"></script>
                 '</td></tr>' 
         }
         $('#data').append(html);
-        
         },
 
         error : function(request, status, error){
@@ -158,10 +170,8 @@ crossorigin="anonymous"></script>
             }
         });
     }
-}
+    }
 
-
-//클릭 함수 안에 있어서 문자로 인식하는건가 아니면 모든게 다 인식하는 건가
 
     // 사원 추가
     $('#btn').click(function(){
@@ -186,16 +196,19 @@ crossorigin="anonymous"></script>
         // alert("버튼 클릭!")
     });
 
-//사원수정
-$('#btn-update').click(function(){
-    let jsonData = {
-        "job" : "MANAGER",
-        "sal" : 5000
-    };
-    let empno = 7902; // empno는 파라미터로 받는다(controller 참고)
+
+
+    //사원수정
+    $('#btn-update').click(function(){
+        let jsonData = {
+            "job" : "MANAGER",
+            "sal" : 5000
+        };
+        let empno = 7902; // empno는 파라미터로 받는다(controller 참고)
     
+
     $.ajax({
-            url : 'http://localhost:8080/api/v1/emp/'+ empno, // controller 주소
+            url : 'http://localhost:8080/api/v1/emp/'+ empno, // controller 주소 / 파라미터로 받는 empno는 +로 붙여준다
             type : 'PATCH', // http 메소드 (get,delete,post,patch)
             contentType : "application/json", // contentType : 보낼 때 json으로 
             dataType : 'json', // dataType : return값을 json으로 보낼 때
