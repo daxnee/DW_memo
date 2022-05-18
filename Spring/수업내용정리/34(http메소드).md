@@ -95,12 +95,14 @@ ex)
 ```
 
 ### delete
+```
 Delete -> url에 파라미터로 받은 값을 적어줌 
 ex)
 http://localhost:8080/emp/empno/9010 
-
+```
 
 ### update
+```
 patch -> body(update할 데이터 입력) -> raw -> JSON
 
 ex) 
@@ -109,7 +111,7 @@ ex)
     "empno" : 9000
 } // empno가 9000인 사람의 comm을 3000 update
 //해당 update 쿼리문은 xml 파일 안 쿼리문 참고  
-
+```
 
 ### update시 오류 해결방법 (update insert delete에 필수!) - `트랜잭션`
 
