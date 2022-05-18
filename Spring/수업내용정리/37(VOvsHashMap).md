@@ -9,6 +9,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+
+
+
 class EmpVO{
 	private int empno;
 	private String ename;
@@ -28,7 +31,7 @@ class EmpVO{
 
 class 햄버거{
 	private String 햄버거이름;
-	private int 햄버가격;
+	private int 햄버거가격;
 	private String 매장이름;
 	public String get햄버거이름() {
 		return 햄버거이름;
@@ -36,8 +39,8 @@ class 햄버거{
 	public void set햄버거이름(String 햄버거이름) {
 		this.햄버거이름 = 햄버거이름;
 	}
-	public int get햄버가격() {
-		return 햄버가격;
+	public int 햄버거가격() {
+		return 햄버거가격;
 	}
 	public String get매장이름() {
 		return 매장이름;
@@ -45,13 +48,24 @@ class 햄버거{
 	public void set매장이름(String 매장이름) {
 		this.매장이름 = 매장이름;
 	}
-	public void set햄버가격(int 햄버가격) {
-		this.햄버가격 = 햄버가격;
+	public void 햄버거가격(int 햄버거가격) {
+		this.햄버거가격 = 햄버가격;
 	}
 }
 
 
+
+// List<Map<String, Object>>
+List안에 Map을 포함하여 값을 List 안에 Key와 value로 받기 
+Map에 데이터를 추가하면 key : value 로 값이 들어간다.
+
+ex) Map<String, Object> map = new Hashmap<String, Object>();
+map.put("이름","양다은")
+
+=> map.get("이름") 으로 key에 접근하면 value값을 출력할 수 있다.
+
 public class 긴급점검50 {
+
 	// List와 Map을 알아보자!
 	public static void main(String[] args) {
 		ArrayList<String> list = new ArrayList<String>();
@@ -59,17 +73,22 @@ public class 긴급점검50 {
 		List<String> list2 = new ArrayList<String>(); //자식이(ArrayList) 부모(List)에 대입도 가능
 		list2 = new LinkedList<String>(); // 재활용때문에 부모에 대입해준다
 		list2.add("hello");
+		//List<>안에는 ArrayList<>,LinkedList<>,Vector<>를 포함하고 있기때문에 변수(list2)를 활용할 수 있다.
+
+		//제네릭 안에 컬렉션도 포함된다는 점이 포인트!
+
 		// Spring에선 쿼리에서 나온 결과를 MyBatis가 list에 넣어주는 것 (list2.add 역할)
 
 		
 		List<햄버거> list3 = new ArrayList<햄버거>();
 		햄버거 불고기버거 = new 햄버거();
-		불고기버거.set햄버가격(3000);
-		불고기버거.set햄버거이름("불고기버거");
-		불고기버거.set매장이름("선화점");
+		불고기버거.set햄버거가격(3000);
+		불고기버거.set햄버거이름("통새우와퍼");
+		불고기버거.set매장이름("버거킹");
 		list3.add(불고기버거);
 		System.out.println(불고기버거.get매장이름());
 		
+
 		// ---- list도 클래스
 		// 포인트는 제네릭 안에 컬렉션도 포함됨
 		// 컬렉션도 클래스니까!
@@ -121,9 +140,28 @@ public class 긴급점검50 {
 		empMapList.add(사원); // list에 넣기 
 		System.out.println(사원);
 		// list과 hashmap 공통점 : 추가 (add) 해준다는 점
-		
-		
+
 		// put과 add를 마이바티스가 해준다
+
+		Map<String,Object> SMITH = new HashMap<String,Object>();
+		SMITH.put("empNo", 7369);
+		SMITH.put("ename", "SMITH");
+		empMapList.add(SMITH);
+		System.out.println(empMapList.get(1).get("empNo"));
+		System.out.println(empMapList.get(1).get("ename"));
+		
+		Map<String,Object> ALLEN = new HashMap<String,Object>();
+		ALLEN.put("empNo", 7499);
+		ALLEN.put("ename", "ALLEN");
+		empMapList.add(ALLEN);
+		System.out.println(empMapList.get(2).get("empNo"));
+		System.out.println(empMapList.get(2).get("ename"));
+		
+		System.out.println("------------");
+		
+		System.out.println(empMapList.get(0).get("ename"));
+		System.out.println(empMapList.get(1).get("ename"));
+		System.out.println(empMapList.get(2).get("ename"));
 		
 	}
 
