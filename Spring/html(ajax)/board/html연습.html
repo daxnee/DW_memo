@@ -253,13 +253,14 @@
                     $('#title').val('');
                     $('#content').val('');
                     $('#data').children().remove();
+                    getBoardList();
                 }
             }
         }); // 웹에선 안 보이고 디비버에선 보임
         }
     });
 
-    // getBoardList();
+    getBoardList();
     // 웹 실행되면 게시판에 게시글이 보이게 설정, click 설정이 필요 없다
     function getBoardList(){
      $.ajax({ 
@@ -281,10 +282,8 @@
                 html += '<tr><td colspan=6 style= "text-align: center;"> 게시글이 없습니다.</tr></td>'
             }
 
-            // 302부터 다시
+            $('#data').append(html);
         }
-    
-
      })
     }
 
