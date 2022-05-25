@@ -271,16 +271,17 @@
             if(result.length>0){
                 for(var i=0; i<result.length; i++){
                     html += 
-                    <tr>
-                        <td>+result[i].boardId+</td>
-                        <td>+result[i].boardId+</td>
-                        <td>+result[i].boardId+</td>
-                        <td>+result[i].boardId+</td>
-                        <td>+result[i].boardId+</td>
-                        <td><span class="high">8320</span></td>
-                    </tr>
-                }
+                    '<tr><td>'
+                        +result[i].boardId+
+                        '</td><td>'+result[i].studentsName+'</td><td>'+result[i].title+'</td><td>'+result[i].updateAt+'</td><td>'+result[i].createAt+'</td><td>'
+                        +'<span class="high">8320</span>'
+                    '</td></tr>'
+             }
+            }else{
+                html += '<tr><td colspan=6 style= "text-align: center;"> 게시글이 없습니다.</tr></td>'
             }
+
+            // 302부터 다시
         }
     
 
