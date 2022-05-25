@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>게시판 로그인</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Login</h1>
+      <div class="login-form">
+        <div class="txt-field">
+          <input id="userId" type="text" required />
+          <label>이름</label>
+        </div>
+        <div class="txt-field">
+          <input id="userPassword" type="password" required />
+          <label>비밀번호</label>
+        </div>
+        <input id="button" class="login-btn" type="button"  value="로그인" />
+        <div class="signup-link">회원이 아닌가요? <a href="join.html">회원가입</a></div>
+      </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      // 빈칸 체크
+      $('#button').click(function(){
+      var userId = $('#userId').val();
+      var userPassword = $('#userPassword').val();
+
+      if(userId == '' || userPassword == ''){
+        alert('빈칸을 확인해주세요!');
+        return false;
+      }
+
+      var jsonData = {
+        studentsId : userId, // VO 필드변수와 이름 동일하게 설정해야 됨!
+        studentsPassword : userPassword
+      }
+
+      $.ajax({
+        url : 'http://localhost:8080/api/v1/login', //컨트롤러 url 
+        // 리턴 : boolean형
+        type : 'POST',
+        contentType : 'application/json', // 서버에 json 타입으로 보낼 예정(요청) 
+        dataType : 'json', // 서버 결과를 json으로 응답 받겠다
+        data : JSON.stringify(jsonData),
+        success : function(response){
+          if(!response){
+            alert('비밀번호 혹은 이름이 틀렸습니다!')
+            return false;
+          }else{
+            if(response){
+              location.href = 'board/index.html'; // response가 true면 url로 이동
+            }
+          }
+        },
+      }); // ajax 끝
+
+
+      }); // click 함수 끝
+
+   </script>
+  </body>
+</html>
