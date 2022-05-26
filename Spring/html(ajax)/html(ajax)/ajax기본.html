@@ -159,7 +159,7 @@ crossorigin="anonymous"></script>
         if(confirm("정말 사원을 삭제하시겠습니까?")){ // confirm = boolean형/ 확인 누르면 삭제가 됨 
         $.ajax({
             url : 'http://localhost:8080/emp/empno/' + empNo,
-            type : 'delete',
+            type : 'DELETE',
             dataType : 'json',
             success : function (response){
        
@@ -168,7 +168,7 @@ crossorigin="anonymous"></script>
                 location.reload();
             }
         
-        });
+        }); // end ajax
     }
     }
 

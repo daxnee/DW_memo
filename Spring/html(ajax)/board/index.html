@@ -9,6 +9,7 @@
 </head>
 <body>
     <div class="container">
+        <!-- 글 작성 팝업 -->
         <div class="write-popup">
             <div class="editor">
                 <div class="input-box">
@@ -29,6 +30,29 @@
                 </div>
             </div>
         </div>
+        <!-- 글 작성 수정 -->
+        <div class="update-popup">
+            <div class="editor">
+                <div class="close">
+                    <a href="#" class="btn-close">닫기</a>
+                </div>
+                <div class="input-box">
+                    <label for="title">제목 : </label>
+                    <input id="upt-title" type="text" placeholder="제목을 입력하세요...">
+                </div>
+                <div class="input-box">
+                    <textarea id="upt-content" rows="10" cols="65" placeholder="내용을 간단히 적어주세요..."></textarea>
+                </div>
+                <div class="btn-area">
+                     <input id="boardIdHidden" type="hidden">
+                    <a id="contentUpdate" href="#" class="btn-update">수정</a>
+                    <a id="contentDelete" href="#" class="btn-delete">삭제</a>
+                </div>
+            </div>
+        </div>
+
+
+
         <div class="navigation">
             <ul>
                 <li>
@@ -138,7 +162,7 @@
                             <th>조회 수</th>
                          </tr>
                      </thead>
-                     <tbody id="data">
+                     <tbody id="boardData">
                          <tr>
                              <!-- <td>1</td>
                              <td>현상원</td>
@@ -200,6 +224,10 @@
     $('.btn-cancel').click(function(){
         $('.write-popup').css('display', 'none');
     });
+    $('.btn-close').click(function(){
+        $('.update-popup').css('display', 'none');
+    });
+
     // $('#contentSubmit').click(function(){
     //     if(confirm('게시글을 작성하시겠습니까?')){
     //         $('.write-popup').css('display', 'none');
@@ -213,7 +241,8 @@
     list.forEach((item) => {item.addEventListener('mouseover',activeLink)});
 </script>
 <script>
-    // 게시판 작성, 게시판 list 호출
+
+    // 게시판 작성(insert), 게시판 list 호출
     $('#contentSubmit').click(function(){
 
         if(confirm('게시글을 작성하시겠습니까?')){
@@ -233,7 +262,7 @@
             title : title
       };
         
-
+      
     $.ajax({ // 게시판 글 작성 데이터가 디비버에 insert
         url : 'http://localhost:8080/api/v1/board',
         type : 'POST',
@@ -243,15 +272,12 @@
         success : function(response){
           console.log(response);
           if(response > 0){
-              //글 작성이 완료되면 css = none (팝업창 사라짐)
-              $('.write-popup').css('display', 'none');
-              //내가 전에 작성한 글 지우고 새 input 박스 보여주기
-              //지우지 않으면 전에 작성한 글이 그대로 남음
-              $('#title').val('');
+              $('.write-popup').css('display', 'none');  //글 작성이 완료되면 css = none (팝업창 사라짐)
+              //내가 전에 작성한 글 지우고 빈 input 박스(제목, 타이틀) 보여주기. 지우지 않으면 전에 작성한 글이 그대로 남는다.
+              $('#title').val('');  
               $('#content').val('');
-              $('#data').children().remove(); 
-              // tbody에 있는 기존 append를 지우고 새로운 함수를 호출해야 한다
-              // remove 하지 않으면 작성했던 게시글이 추가로 또 생긴다.
+              $('#boardData').children().remove(); 
+              // tbody에 있는 기존 append를 지우고 새로운 함수를 호출해야 한다 remove 하지 않으면 게시글 목록이 추가로 또 생긴다. 
               getBoardList(); //아래 함수 호출
           }
         }
@@ -262,7 +288,7 @@
 
 
     //조건
-    //1. 게시판 리스트 호출 *조회수는 우선 0으로 처리
+    //1. 게시판 리스트 호출 *조회수는 우선 0으로 처리   
     //2. 리스트가 null이면 '-'로 바꾸고 creatAt 날짜 dateformat으로 바꾸기
     getBoardList(); // 함수 호출 (없으면 결과 안 뜸)
 
@@ -280,7 +306,8 @@
                 // 조회수 count 로직 여기서 구현하기 why? for문이 돌아야 count가 가능하니까
                 // var 조회수 =  response[i].조회수;
             html += 
-            '<tr><td>' 
+            '<tr onclick=getBoard('+response[i].boardId+')><td>'  // tr : 행전체, td : 컬럼 
+                // getBoard 함수의 파라미터로 boardId를 넣었으니 onclick에서도 설정해주기
                 +response[i].boardId+
                 '</td><td>'
                 +response[i].studentsName+
@@ -299,14 +326,99 @@
         } // colspan = 6  : 목록이 6개
 
 
-        $('#data').append(html); // tbody에 json데이터 렌더링
+        $('#boardData').append(html); // tbody에 json데이터 렌더링
         },
 
         error : function(request, status, error){
         console.log("에러 내용은 ==> " + error);
         },
     });
-    }   // end function
+}   // end function
+
+function getBoard(boardId){ // 클릭한 게시물 상세내용 확인하는 함수 
+        
+        // 파라미터에 boardId를 받고 ajax로 보내줄 것임
+        
+        //html hidden하기
+
+        //1. html css : none해주기 
+        console.log(boardId); // 행 클릭하면 해당 boardId 번호가 console창에 뜬다.
+        $('.update-popup').css('display', 'block'); // 클릭했을때 block(창 뜨기)
+
+        //AJAX 작성
+        $.ajax({ // 게시판 글 작성 데이터가 디비버에 insert
+        url : 'http://localhost:8080/api/v1/board/boardId/'+boardId,
+        type : 'GET',
+        dataType : 'json', 
+        success : function(response){
+            console.log(response);
+            //3. input에 데이터 set 해주기
+            $('#upt-title').val(response.title);
+            $('#upt-content').val(response.content);
+            $('#boardIdHidden').val(boardId); // 개발자도구에서 수정 버튼 누르면 html value에 boardId가 들어가 있음
+            //id를 html input에 넣어준 것임
+            }
+
+        });
+    } // end getBoard()
+
+
+    //게시물 수정하는 함수(update)
+    $('#contentUpdate').click(function(){
+        //1. 게시판 번호 확인
+        var boardId = $('#boardIdHidden').val(); // hidden에 숨겨둔 boardId 가져오기
+
+        //2. JSON 생성
+        var title =  $('#upt-title').val();
+        var content = $('#upt-content').val();
+        var jsonData = {
+            boardId : boardId,
+            title : title,
+            content : content
+        };
+
+      //3. AJAX를 이용해서 update!
+      $.ajax({ 
+            url : 'http://localhost:8080/api/v1/board/boardId/'+boardId,
+            type : 'PATCH', // HTTP update 메소드 
+            contentType : 'application/json', // 서버에 json타입으로 보낼 예정(요청)
+            dataType : 'json', // 서버 결과를 json으로 응답받겠다
+            data : JSON.stringify(jsonData),
+            success : function(response){
+                if(response > 0){
+                    if(!confirm('수정 하시겠습니까?')){
+                        return false; 
+                    }
+                    $('.update-popup').css('display', 'none'); // 게시물 상세 화면 감추기
+                    alert('수정 완료');
+                }
+            }
+        }); //ajax end 
+    });
+
+    //contentType, data 를 왜 써 주는가? 해당 컨트롤러에서 @RequestBody로 데이터를 받기 때문! 
+    // 게시물 삭제에선 body로 받지 않기 때문에 필요가 없다
+
+    //게시물 삭제하는 함수
+    $('#contentDelete').click(function(){
+        var boardId = $('#boardIdHidden').val(); 
+        if(confirm('게시물을 삭제하시겠습니까?')){
+            $.ajax({ 
+                url : 'http://localhost:8080/api/v1/board/boardId/'+boardId,
+                type : 'DELETE',
+                dataType : 'json', // 서버 결과를 json으로 응답받겠다
+                success : function(response){
+                if(response > 0){
+                    $('#boardData').children().remove();
+                    $('.update-popup').css('display', 'none'); // 게시물 상세 화면 감추기
+                    alert('삭제 완료!')
+                    getBoardList();// delete or insert 할때 데이터가 변경됐으니 리스트를 새로 불러와야 한다.
+                    }
+                }
+            }); //end ajax
+        }
+    }); // end
+
 
 
 

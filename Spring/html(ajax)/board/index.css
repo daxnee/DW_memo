@@ -371,3 +371,51 @@ body{
     padding: 0.5rem 0.75rem;
     border-radius: 5px;
 }
+
+/* 글 수정 */
+.update-popup{
+    z-index: 1;
+    display: none;
+    position: absolute;
+    left: 0; 
+    right: 0; 
+    margin : 40px auto;
+    width: 700px;
+    height: 500px;
+    background-color:var(--grey);
+    box-shadow: 0 7px 25px rgba(0,0,0,0.3);
+    border-radius: 5px;
+}
+
+.btn-update{
+    font-size: 18px;
+    background-color: #f6c23e;
+    padding: 2%;
+    text-decoration: none;
+    color: var(--white);
+    border-radius: 3px;
+    margin-right: 10px;
+}
+
+.btn-delete{
+    font-size: 18px;
+    background-color: #36b9cc;
+    padding: 2%;
+    text-decoration: none;
+    color: var(--white);
+    border-radius: 3px;
+}
+.close{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    right: -10px;
+}
+.btn-close{
+    font-size: 18px;
+    background-color: #5a5c69;
+    padding: 2%;
+    text-decoration: none;
+    color: var(--white);
+    border-radius: 3px;
+}
