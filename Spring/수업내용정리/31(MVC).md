@@ -51,7 +51,7 @@ sts 사이트에서 add dependencies 검색 기능으로 lombok과 같은 기능
 `어노테이션(@)`을 붙여서 `spring`한테 알려주는 것임
 
 ### `문제푸는 방법`
-1. 해당 클래스가 컨트롤러면 `@컨트롤러`, 서비스면 `@서비스`
+1. 해당 클래스가 컨트롤러면 `@Controller`, 서비스면 `@Service`
 2. 서비스에 로직을 만들었으니까 `@Autowired` 붙여주기 
     -  @Autowired : 객체 생성과 소멸을 `spring이 관리`해주겠다.
 
@@ -68,3 +68,5 @@ sts 사이트에서 add dependencies 검색 기능으로 lombok과 같은 기능
 		return service.getUserAgeMax();
 	}
 ```
+
+### HTMl => 웹서버(Spring) => DB **
