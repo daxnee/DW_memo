@@ -45,3 +45,15 @@ alter table board add column cnt integer(4) default 0;
 
 2. 서버에서 받아야 할 데이터 
 => 게시판 번호 (Board_id), 현재 조회수를 파라미터로 받아야 한다.
+
+
+### 키보드 동작
+```
+1. 키보드를 누를 때 => keydown
+2. 누른 키를 뗄 때 => keyup
+3. 키보드를 계속 누르고 있을 때 => keypress
+
+필요한 키업을 사용할 때 검색 방법
+: jquery spacebar key로 검색
+
+```
