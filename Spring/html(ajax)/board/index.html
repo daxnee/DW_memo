@@ -13,7 +13,7 @@
         <div class="write-popup">
             <div class="editor">
                 <div class="input-box">
-                    <label for="studentsName">작성자 : </label>
+                    <label for="studentsName">작성자 :  </label>
                     <input id="studentsName" type="text" value="daxnee" readonly>
                 </div>
 
@@ -30,6 +30,7 @@
                 </div>
             </div>
         </div>
+        
         <!-- 글 작성 수정 -->
         <div class="update-popup">
             <div class="editor">
@@ -98,7 +99,7 @@
             <!-- search -->
             <div class="search">
                 <label>
-                    <input type="text" placeholder="작성자를 검색하세요...">
+                    <input id="searchBar" type="text" placeholder="작성자를 검색하세요...">
                 </label>
             </div>
             <div>
@@ -288,7 +289,7 @@
 
 
     //조건
-    //1. 게시판 리스트 호출 *조회수는 우선 0으로 처리   
+    //1. 게시판 리스트 호출 
     //2. 리스트가 null이면 '-'로 바꾸고 creatAt 날짜 dateformat으로 바꾸기
     getBoardList(); // 함수 호출 (없으면 결과 안 뜸)
 
@@ -305,9 +306,10 @@
         for(var i=0; i<response.length; i++){ // 
                 // 조회수 count 로직 여기서 구현하기 why? for문이 돌아야 count가 가능하니까
                 // var 조회수 =  response[i].조회수;
-            html += 
-            '<tr onclick=getBoard('+response[i].boardId+')><td>'  // tr : 행전체, td : 컬럼 
-                // getBoard 함수의 파라미터로 boardId를 넣었으니 onclick에서도 설정해주기
+            var views = response[i].cnt;  
+            if(views < 10){         
+                html += 
+            '<tr onclick=getBoard('+response[i].boardId+')><td>'  
                 +response[i].boardId+
                 '</td><td>'
                 +response[i].studentsName+
@@ -317,30 +319,60 @@
                 +response[i].updateAt+
                 '</td><td>'
                 +response[i].createAt+
+                '</td><td><span class = "row">'
+                +response[i].cnt+
+                 '</span></td></tr>'
+                }
+
+               
+                if(views >= 10 && views <= 20){
+                    html += 
+                '<tr onclick=getBoard('+response[i].boardId+')><td>'  
+                +response[i].boardId+
                 '</td><td>'
-                +'<span class="row">22</span>'
-                + '</td></tr>'
-        }
+                +response[i].studentsName+
+                '</td><td>'
+                +response[i].title+
+                '</td><td>'
+                +response[i].updateAt+
+                '</td><td>'
+                +response[i].createAt+
+                '</td><td><span class = "middle">'
+                +response[i].cnt+
+                 '</span></td></tr>'
+                }
+              
+                if(views >= 20){
+                    html += 
+                '<tr onclick=getBoard('+response[i].boardId+')><td>'  
+                +response[i].boardId+
+                '</td><td>'
+                +response[i].studentsName+
+                '</td><td>'
+                +response[i].title+
+                '</td><td>'
+                +response[i].updateAt+
+                '</td><td>'
+                +response[i].createAt+
+                '</td><td><span class = "high">'
+                +response[i].cnt+
+                 '</span></td></tr>'
+                }
+            }
         }else{
             html += '<tr><td colspan=6 style= "text-align: center;"> 게시글이 없습니다.</tr></td>'
         } // colspan = 6  : 목록이 6개
 
-
         $('#boardData').append(html); // tbody에 json데이터 렌더링
-        },
+            },
+        });
+    }   // end function
 
-        error : function(request, status, error){
-        console.log("에러 내용은 ==> " + error);
-        },
-    });
-}   // end function
-
-function getBoard(boardId){ // 클릭한 게시물 상세내용 확인하는 함수 
+    
+    function getBoard(boardId){ // 클릭한 게시물 상세내용 확인하는 함수 
         
         // 파라미터에 boardId를 받고 ajax로 보내줄 것임
-        
         //html hidden하기
-
         //1. html css : none해주기 
         console.log(boardId); // 행 클릭하면 해당 boardId 번호가 console창에 뜬다.
         $('.update-popup').css('display', 'block'); // 클릭했을때 block(창 뜨기)
@@ -357,6 +389,7 @@ function getBoard(boardId){ // 클릭한 게시물 상세내용 확인하는 함
             $('#upt-content').val(response.content);
             $('#boardIdHidden').val(boardId); // 개발자도구에서 수정 버튼 누르면 html value에 boardId가 들어가 있음
             //id를 html input에 넣어준 것임
+
             setBoardViews(boardId); // 조회수 함수
             }
 
@@ -397,6 +430,7 @@ function getBoard(boardId){ // 클릭한 게시물 상세내용 확인하는 함
         }); //ajax end 
     });
 
+
     //contentType, data 를 왜 써 주는가? 해당 컨트롤러에서 @RequestBody로 데이터를 받기 때문! 
     // 게시물 삭제에선 body로 받지 않기 때문에 필요가 없다
 
@@ -422,18 +456,108 @@ function getBoard(boardId){ // 클릭한 게시물 상세내용 확인하는 함
 
     //조회수 증가 함수 (count)
     function setBoardViews(boardID){
-        $.ajax({ 
-            url : 'http://localhost:8080/api/v1/board/views/boardId/'+boardId,
-            type : 'PATCH', // HTTP update 메소드 
-            dataType : 'json', // 서버 결과를 json으로 응답받겠다
-            success : function(response){
+        $.ajax({
+            url: 'http://localhost:8080/api/v1/board/views/boardId/'+boardId,
+            type : 'PATCH',
+            dataType: 'json',
+            success: function (response) {
                 if(response > 0){
-                    
+                    $('#boardData').children().remove();//tbody id
+                    getBoardList();
                 }
             }
         }); //ajax end 
+    }//end function
 
-    }
+// 1. 키보드를 누를 때 => keydown
+// 2. 누른 키를 뗄 때 => keyup
+// 3. 키보드를 계속 누르고 있을 때 => keypress
+//  enter키 : 13
+    $('#searchBar').keyup(function(key){ //keyup을 했을때 누른 키가 파라미터인 key로 넘어감
+        // 엔터를 누를 때 hellow world를 출력하고 싶음
+        if(key.keyCode == 13){
+            console.log('hello world!'); //enter 누를때 console창에 뜸
+            //1. input 값을 가져옴
+            var search = $('#searchBar').val();
+            console.log(search); // enter 누를때 #searchBar의 input값이 뜸
+            //2. ajax 호출 (서버에서 작성자와 이름이 같은지 판별해줌)
+
+         $.ajax({
+            url : 'http://localhost:8080/api/v1/board/search?writer=다은',
+            type : 'GET',
+            dataType : 'json',
+            success : function(response){
+            let html = "";
+            if(response.length>0){ // 
+            for(var i=0; i<response.length; i++){ // 
+                var views = response[i].cnt;  
+                if(views < 10){         
+                html += 
+            '<tr onclick=getBoard('+response[i].boardId+')><td>'  
+                +response[i].boardId+
+                '</td><td>'
+                +response[i].studentsName+
+                '</td><td>'
+                +response[i].title+
+                '</td><td>'
+                +response[i].updateAt+
+                '</td><td>'
+                +response[i].createAt+
+                '</td><td><span class = "row">'
+                +response[i].cnt+
+                 '</span></td></tr>'
+                }
+
+               
+                if(views >= 10 && views <= 20){
+                    html += 
+                '<tr onclick=getBoard('+response[i].boardId+')><td>'  
+                +response[i].boardId+
+                '</td><td>'
+                +response[i].studentsName+
+                '</td><td>'
+                +response[i].title+
+                '</td><td>'
+                +response[i].updateAt+
+                '</td><td>'
+                +response[i].createAt+
+                '</td><td><span class = "middle">'
+                +response[i].cnt+
+                 '</span></td></tr>'
+                }
+              
+                if(views >= 20){
+                    html += 
+                '<tr onclick=getBoard('+response[i].boardId+')><td>'  
+                +response[i].boardId+
+                '</td><td>'
+                +response[i].studentsName+
+                '</td><td>'
+                +response[i].title+
+                '</td><td>'
+                +response[i].updateAt+
+                '</td><td>'
+                +response[i].createAt+
+                '</td><td><span class = "high">'
+                +response[i].cnt+
+                 '</span></td></tr>'
+                }
+            }
+        }else{
+            // 게시글 없으면 로직 구현
+            html += '<tr><td colspan=6 style= "text-align: center;"> 게시글이 없습니다.</tr></td>'
+        } // colspan = 6  : 목록이 6개
+        $('#boardData').children().remove(); //지우고 
+        $('#boardData').append(html); // tbody에 json데이터 렌더링
+        },
+
+        error : function(request, status, error){
+        console.log("에러 내용은 ==> " + error);
+            },
+         }); // ajax end
+       };  // if end
+        
+    }); // end function
 
 
 
