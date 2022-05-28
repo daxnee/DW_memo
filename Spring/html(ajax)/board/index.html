@@ -242,8 +242,85 @@
     list.forEach((item) => {item.addEventListener('mouseover',activeLink)});
 </script>
 <script>
+    // 게시판 리스트 호출 
+    getBoardList(); // 함수 호출 (없으면 결과 안 뜸)
 
-    // 게시판 작성(insert), 게시판 list 호출
+    function getBoardList(){
+    $.ajax({
+        url : 'http://localhost:8080/api/v1/board',
+        type : 'GET',
+        dataType : 'json',
+        success : function(response){ //(파라미터 변수 이름이라 임의로 지정가능)
+            // 게시판 조회하는 controller의 리턴타입이 변수 response에 담김
+        let html = "";
+        if(response.length>0){ // 
+        for(var i=0; i<response.length; i++){ // 
+                // 조회수 count 로직 여기서 구현하기 why? for문이 돌아야 count가 가능하니까
+                // var 조회수 =  response[i].조회수;
+            var views = response[i].cnt;  
+            if(views < 10){         
+                html += 
+            '<tr onclick=getBoard('+response[i].boardId+')><td>'  
+                +response[i].boardId+
+                '</td><td>'
+                +response[i].studentsName+
+                '</td><td>'
+                +response[i].title+
+                '</td><td>'
+                +response[i].updateAt+
+                '</td><td>'
+                +response[i].createAt+
+                '</td><td><span class = "row">'
+                +response[i].cnt+
+                 '</span></td></tr>'
+                }
+    
+               
+                if(views >= 10 && views <= 20){
+                    html += 
+                '<tr onclick=getBoard('+response[i].boardId+')><td>'  
+                +response[i].boardId+
+                '</td><td>'
+                +response[i].studentsName+
+                '</td><td>'
+                +response[i].title+
+                '</td><td>'
+                +response[i].updateAt+
+                '</td><td>'
+                +response[i].createAt+
+                '</td><td><span class = "middle">'
+                +response[i].cnt+
+                 '</span></td></tr>'
+                }
+              
+                if(views >= 20){
+                    html += 
+                '<tr onclick=getBoard('+response[i].boardId+')><td>'  
+                +response[i].boardId+
+                '</td><td>'
+                +response[i].studentsName+
+                '</td><td>'
+                +response[i].title+
+                '</td><td>'
+                +response[i].updateAt+
+                '</td><td>'
+                +response[i].createAt+
+                '</td><td><span class = "high">'
+                +response[i].cnt+
+                 '</span></td></tr>'
+                }
+            }
+        }else{
+            html += '<tr><td colspan=6 style= "text-align: center;"> 게시글이 없습니다.</tr></td>'
+        } // colspan = 6  : 목록이 6개
+    
+        $('#boardData').append(html); // tbody에 json데이터 렌더링
+            },
+        });
+    }   // end function
+
+
+     /* 게시판 작성 함수 */
     $('#contentSubmit').click(function(){
 
         if(confirm('게시글을 작성하시겠습니까?')){
@@ -285,96 +362,11 @@
 
     }); // ajax end  =>  웹에선 안 보이고 디비버에선 보임
     }    // if end
-    });// 함수 끝
+ });// 함수 끝
 
-
-    //조건
-    //1. 게시판 리스트 호출 
-    //2. 리스트가 null이면 '-'로 바꾸고 creatAt 날짜 dateformat으로 바꾸기
-    getBoardList(); // 함수 호출 (없으면 결과 안 뜸)
-
-    // 웹 실행되면 게시판에 게시글이 보이게 설정, click 설정이 필요 없다
-    function getBoardList(){
-    $.ajax({
-        url : 'http://localhost:8080/api/v1/board',
-        type : 'GET',
-        dataType : 'json',
-        success : function(response){ //(파라미터 변수 이름이라 임의로 지정가능)
-            // 게시판 조회하는 controller의 리턴타입이 변수 response에 담김
-        let html = "";
-        if(response.length>0){ // 
-        for(var i=0; i<response.length; i++){ // 
-                // 조회수 count 로직 여기서 구현하기 why? for문이 돌아야 count가 가능하니까
-                // var 조회수 =  response[i].조회수;
-            var views = response[i].cnt;  
-            if(views < 10){         
-                html += 
-            '<tr onclick=getBoard('+response[i].boardId+')><td>'  
-                +response[i].boardId+
-                '</td><td>'
-                +response[i].studentsName+
-                '</td><td>'
-                +response[i].title+
-                '</td><td>'
-                +response[i].updateAt+
-                '</td><td>'
-                +response[i].createAt+
-                '</td><td><span class = "row">'
-                +response[i].cnt+
-                 '</span></td></tr>'
-                }
-
-               
-                if(views >= 10 && views <= 20){
-                    html += 
-                '<tr onclick=getBoard('+response[i].boardId+')><td>'  
-                +response[i].boardId+
-                '</td><td>'
-                +response[i].studentsName+
-                '</td><td>'
-                +response[i].title+
-                '</td><td>'
-                +response[i].updateAt+
-                '</td><td>'
-                +response[i].createAt+
-                '</td><td><span class = "middle">'
-                +response[i].cnt+
-                 '</span></td></tr>'
-                }
-              
-                if(views >= 20){
-                    html += 
-                '<tr onclick=getBoard('+response[i].boardId+')><td>'  
-                +response[i].boardId+
-                '</td><td>'
-                +response[i].studentsName+
-                '</td><td>'
-                +response[i].title+
-                '</td><td>'
-                +response[i].updateAt+
-                '</td><td>'
-                +response[i].createAt+
-                '</td><td><span class = "high">'
-                +response[i].cnt+
-                 '</span></td></tr>'
-                }
-            }
-        }else{
-            html += '<tr><td colspan=6 style= "text-align: center;"> 게시글이 없습니다.</tr></td>'
-        } // colspan = 6  : 목록이 6개
-
-        $('#boardData').append(html); // tbody에 json데이터 렌더링
-            },
-        });
-    }   // end function
 
     
     function getBoard(boardId){ // 클릭한 게시물 상세내용 확인하는 함수 
-        
-        // 파라미터에 boardId를 받고 ajax로 보내줄 것임
-        //html hidden하기
-        //1. html css : none해주기 
-        console.log(boardId); // 행 클릭하면 해당 boardId 번호가 console창에 뜬다.
         $('.update-popup').css('display', 'block'); // 클릭했을때 block(창 뜨기)
 
         //AJAX 작성
@@ -387,8 +379,7 @@
             //3. input에 데이터 set 해주기
             $('#upt-title').val(response.title);
             $('#upt-content').val(response.content);
-            $('#boardIdHidden').val(boardId); // 개발자도구에서 수정 버튼 누르면 html value에 boardId가 들어가 있음
-            //id를 html input에 넣어준 것임
+            $('#boardIdHidden').val(boardId); 
 
             setBoardViews(boardId); // 조회수 함수
             }
@@ -397,12 +388,9 @@
     } // end getBoard()
 
 
-    //게시물 수정하는 함수(update)
     $('#contentUpdate').click(function(){
-        //1. 게시판 번호 확인
         var boardId = $('#boardIdHidden').val(); // hidden에 숨겨둔 boardId 가져오기
 
-        //2. JSON 생성
         var title =  $('#upt-title').val();
         var content = $('#upt-content').val();
         var jsonData = {
@@ -411,7 +399,6 @@
             content : content
         };
 
-      //3. AJAX를 이용해서 update!
       $.ajax({ 
             url : 'http://localhost:8080/api/v1/board/boardId/'+boardId,
             type : 'PATCH', // HTTP update 메소드 
@@ -430,11 +417,7 @@
         }); //ajax end 
     });
 
-
-    //contentType, data 를 왜 써 주는가? 해당 컨트롤러에서 @RequestBody로 데이터를 받기 때문! 
-    // 게시물 삭제에선 body로 받지 않기 때문에 필요가 없다
-
-    //게시물 삭제하는 함수
+        //게시물 삭제 하는 함수
     $('#contentDelete').click(function(){
         var boardId = $('#boardIdHidden').val(); 
         if(confirm('게시물을 삭제하시겠습니까?')){
@@ -558,8 +541,6 @@
        };  // if end
         
     }); // end function
-
-
 
 
 
