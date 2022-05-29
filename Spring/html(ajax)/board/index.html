@@ -417,9 +417,11 @@
         }); //ajax end 
     });
 
+
+
         //게시물 삭제 하는 함수
     $('#contentDelete').click(function(){
-        var boardId = $('#boardIdHidden').val(); 
+        let boardId = $('#boardIdHidden').val(); 
         if(confirm('게시물을 삭제하시겠습니까?')){
             $.ajax({ 
                 url : 'http://localhost:8080/api/v1/board/boardId/'+boardId,
