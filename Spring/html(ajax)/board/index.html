@@ -252,7 +252,7 @@
         dataType : 'json',
         success : function(response){ //(파라미터 변수 이름이라 임의로 지정가능)
             // 게시판 조회하는 controller의 리턴타입이 변수 response에 담김
-        let html = "";
+        var html = "";
         if(response.length>0){ // 
         for(var i=0; i<response.length; i++){ // 
                 // 조회수 count 로직 여기서 구현하기 why? for문이 돌아야 count가 가능하니까
@@ -324,13 +324,18 @@
     $('#contentSubmit').click(function(){
 
         if(confirm('게시글을 작성하시겠습니까?')){
-        var content = $('#content').val();
         var title = $('#title').val();
-        var studentsId = 9; // DB에 있는 studentsId로 임시 설정
+        var content = $('#content').val();
+        var studentsId = 1; // DB에 있는 studentsId로 임시 설정
 
         //빈칸 확인
-        if(content == '' && title){
-            alert('빈칸을 확인해주세요!');
+        if(title == ''){
+            alert('제목을 입력해주세요!');
+            return false;
+        }
+
+        if(content == ''){
+            alert('내용을 입력해주세요!');
             return false;
         }
 
@@ -362,11 +367,13 @@
 
     }); // ajax end  =>  웹에선 안 보이고 디비버에선 보임
     }    // if end
- });// 함수 끝
+ });// ontentSubmit click end
 
 
     
     function getBoard(boardId){ // 클릭한 게시물 상세내용 확인하는 함수 
+        //boardId html에 hidden 하기
+        //1. 화면 none -> block
         $('.update-popup').css('display', 'block'); // 클릭했을때 block(창 뜨기)
 
         //AJAX 작성
@@ -375,7 +382,6 @@
         type : 'GET',
         dataType : 'json', 
         success : function(response){
-            console.log(response);
             //3. input에 데이터 set 해주기
             $('#upt-title').val(response.title);
             $('#upt-content').val(response.content);
@@ -387,14 +393,14 @@
         });
     } // end getBoard()
 
-
+    // 게시물 수정 하는 함수
     $('#contentUpdate').click(function(){
+        // 1.게시판 번호 확인
         var boardId = $('#boardIdHidden').val(); // hidden에 숨겨둔 boardId 가져오기
-
+        //2. JSON 생성
         var title =  $('#upt-title').val();
         var content = $('#upt-content').val();
         var jsonData = {
-            boardId : boardId,
             title : title,
             content : content
         };
@@ -421,7 +427,7 @@
 
         //게시물 삭제 하는 함수
     $('#contentDelete').click(function(){
-        let boardId = $('#boardIdHidden').val(); 
+        var boardId = $('#boardIdHidden').val(); //hidden에 숨겨둔 boardId 가져오기.
         if(confirm('게시물을 삭제하시겠습니까?')){
             $.ajax({ 
                 url : 'http://localhost:8080/api/v1/board/boardId/'+boardId,
@@ -429,10 +435,10 @@
                 dataType : 'json', // 서버 결과를 json으로 응답받겠다
                 success : function(response){
                 if(response > 0){
-                    $('#boardData').children().remove();
-                    $('.update-popup').css('display', 'none'); // 게시물 상세 화면 감추기
                     alert('삭제 완료!')
+                    $('#boardData').children().remove();
                     getBoardList();// delete or insert 할때 데이터가 변경됐으니 리스트를 새로 불러와야 한다.
+                    $('.update-popup').css('display', 'none'); // 게시물 상세 화면 감추기
                     }
                 }
             }); //end ajax
@@ -465,10 +471,10 @@
             //1. input 값을 가져옴
             var search = $('#searchBar').val();
             console.log(search); // enter 누를때 #searchBar의 input값이 뜸
-            //2. ajax 호출 (서버에서 작성자와 이름이 같은지 판별해줌)
-
+            
+        //2. ajax 호출 (서버에서 작성자와 이름이 같은지 판별해줌)
          $.ajax({
-            url : 'http://localhost:8080/api/v1/board/search?writer=다은',
+            url : 'http://localhost:8080/api/v1/board/search?writer='+search,
             type : 'GET',
             dataType : 'json',
             success : function(response){
