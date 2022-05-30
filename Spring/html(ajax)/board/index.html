@@ -326,7 +326,7 @@
         if(confirm('게시글을 작성하시겠습니까?')){
         var title = $('#title').val();
         var content = $('#content').val();
-        var studentsId = 1; // DB에 있는 studentsId로 임시 설정
+        var studentsId = 2; // DB에 있는 studentsId로 임시 설정
 
         //빈칸 확인
         if(title == ''){
@@ -416,8 +416,10 @@
                     if(!confirm('수정 하시겠습니까?')){
                         return false; 
                     }
-                    $('.update-popup').css('display', 'none'); // 게시물 상세 화면 감추기
                     alert('수정 완료');
+                    $('#boardData').children().remove();
+                    $('.update-popup').css('display', 'none'); // 게시물 상세 화면 감추기
+                    getBoardList();
                 }
             }
         }); //ajax end 
