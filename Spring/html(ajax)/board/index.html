@@ -246,22 +246,26 @@
     
     // 게시판 리스트 호출 
     getBoardStatistics();
-    function getBoardStatistics(){
+
+     function getBoardStatistics(){
         $.ajax({
             url: 'http://localhost:8080/api/v1/board/statistics',
             type : 'GET',
-            dataType : 'json',
-            success : function(response){
-                // text() or html() input을 제외한 태그를 컨트롤할 때 사용
-                //val()은 input 컨트롤할때 사용
+            dataType: 'json',
+            success: function (response) {
+                console.log(response)
+                //text() or html() input을 제외한 태그를 컨트롤할 때 사용.
+                //val()은 input 컨트롤할 때 사용.
                 $('#boardCnt').text(response.boardCnt);
-                $('#viewsCnt').text(response.viewsCnt);
-                $('#writerCnt').text(response.writerCnt);
                 $('#studentsCnt').text(response.studentsCnt);
+                $('#writerCnt').text(response.writerCnt);
+                $('#viewsCnt').text(response.viewsCnt);
+            },
+            error : function(request , status, error){
+                console.log(error)
             }
         });
-
-    };
+    };//end
 
     function getBoardList(){
     $.ajax({
