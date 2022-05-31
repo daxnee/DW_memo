@@ -110,7 +110,7 @@
          <div class="cardBox">
              <div class="card">
                  <div>
-                    <div class="numbers">1,400</div>
+                    <div id="studentsCnt" class="numbers">1,400</div>
                     <div class="cardName">학생 수</div>
                  </div>
                  <div class="iconBx">
@@ -119,7 +119,7 @@
              </div>
              <div class="card">
                 <div>
-                   <div class="numbers">500</div>
+                   <div id="boardCnt" class="numbers">500</div>
                    <div class="cardName">게시글 수</div>
                 </div>
                 <div class="iconBx">
@@ -128,7 +128,7 @@
             </div>
             <div class="card">
                 <div>
-                   <div class="numbers">300</div>
+                   <div id="writerCnt" class="numbers">300</div>
                    <div class="cardName">작성자 수</div>
                 </div>
                 <div class="iconBx">
@@ -137,7 +137,7 @@
             </div>
             <div class="card">
                 <div>
-                   <div class="numbers">2,800</div>
+                   <div id="viewsCnt" class="numbers">2,800</div>
                    <div class="cardName">총 조회 수</div>
                 </div>
                 <div class="iconBx">
@@ -244,6 +244,26 @@
 <script>
     // 게시판 리스트 호출 
     getBoardList(); // 함수 호출 (없으면 결과 안 뜸)
+    
+    getBoardStatistics(); // 통계 함수 호출
+
+    function getBoardStatistics(){
+        
+        $.ajax({
+        url : 'http://localhost:8080/api/v1/board/statistics',
+        type : 'GET',
+        dataType : 'json',
+        success : function(response){ 
+             console.log(response)
+            // text() or html() input을 제외한 태그를 컨트롤할 때 사용.
+            // val()은 input 컨트롤할 때 사용
+            $('#boardCnt').text(response.boardCnt);
+            $('#studentsCnt').text(response.studentsCnt);
+            $('#writerCnt').text(response.writerCnt);
+            $('#viewsCnt').text(response.viewsCnt);
+            }
+          });
+        };  //end
 
     function getBoardList(){
     $.ajax({
@@ -447,8 +467,7 @@
         }
     }); // end
 
-    //조회수 증가 함수 (count)
-    function setBoardViews(boardID){
+    function setBoardViews(boardId){ //게시판 조회수 증가 함수
         $.ajax({
             url: 'http://localhost:8080/api/v1/board/views/boardId/'+boardId,
             type : 'PATCH',
@@ -459,98 +478,50 @@
                     getBoardList();
                 }
             }
-        }); //ajax end 
-    }//end function
-
-// 1. 키보드를 누를 때 => keydown
-// 2. 누른 키를 뗄 때 => keyup
-// 3. 키보드를 계속 누르고 있을 때 => keypress
-//  enter키 : 13
-    $('#searchBar').keyup(function(key){ //keyup을 했을때 누른 키가 파라미터인 key로 넘어감
-        // 엔터를 누를 때 hellow world를 출력하고 싶음
+        });
+    }
+    //1. keyup : 누른 키보드 땔 때
+    //2. keypress : 키보드를 계속 누를 때
+    //3. keydown : 키보드 누를 때
+    $('#searchBar').keyup(function(key){
+        //엔터를 누를때 hello world를 출력하고 싶음.
+        //13은 엔터를 의미
         if(key.keyCode == 13){
-            console.log('hello world!'); //enter 누를때 console창에 뜸
-            //1. input 값을 가져옴
-            var search = $('#searchBar').val();
-            console.log(search); // enter 누를때 #searchBar의 input값이 뜸
-            
-        //2. ajax 호출 (서버에서 작성자와 이름이 같은지 판별해줌)
-         $.ajax({
-            url : 'http://localhost:8080/api/v1/board/search?writer='+search,
-            type : 'GET',
-            dataType : 'json',
-            success : function(response){
-            let html = "";
-            if(response.length>0){ // 
-            for(var i=0; i<response.length; i++){ // 
-                var views = response[i].cnt;  
-                if(views < 10){         
-                html += 
-            '<tr onclick=getBoard('+response[i].boardId+')><td>'  
-                +response[i].boardId+
-                '</td><td>'
-                +response[i].studentsName+
-                '</td><td>'
-                +response[i].title+
-                '</td><td>'
-                +response[i].updateAt+
-                '</td><td>'
-                +response[i].createAt+
-                '</td><td><span class = "row">'
-                +response[i].cnt+
-                 '</span></td></tr>'
+            //1. input 값을 가져옴.
+            var search = $('#searchBar').val();//input에 작성한 작성자를 가져옴
+            //2. AJAX 호출
+            $.ajax({
+                url: 'http://localhost:8080/api/v1/board/search?writer='+search,
+                type : 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    var html = '';
+                    if(response.length > 0){
+                        for(var i=0; i<response.length; i++){          
+                            var views = response[i].cnt;
+                            if(views < 10){
+                                html += '<tr onclick=getBoard('+response[i].boardId+') ><td>'+response[i].boardId+'</td><td>'+response[i].studentsName+'</td><td>'+response[i].title+'</td><td>'+response[i].updateAt+'</td><td>'+response[i].createAt+'</td><td><span class="row">'+response[i].cnt+'</span></td></tr>';  
+                            }
+                            if(views >= 10 && views < 20){
+                                html += '<tr onclick=getBoard('+response[i].boardId+') ><td>'+response[i].boardId+'</td><td>'+response[i].studentsName+'</td><td>'+response[i].title+'</td><td>'+response[i].updateAt+'</td><td>'+response[i].createAt+'</td><td><span class="middle">'+response[i].cnt+'</span></td></tr>';  
+                            }
+                            if(views >= 20){
+                                html += '<tr onclick=getBoard('+response[i].boardId+') ><td>'+response[i].boardId+'</td><td>'+response[i].studentsName+'</td><td>'+response[i].title+'</td><td>'+response[i].updateAt+'</td><td>'+response[i].createAt+'</td><td><span class="high">'+response[i].cnt+'</span></td></tr>';  
+                            }
+                        }
+                    }else{
+                        //게시글 없음 로직 구현
+                        html += '<tr><td colspan=6 style="text-align: center;">게시글이 없습니다.</td></tr>';
+                    }
+                    $('#boardData').children().remove();
+                    $('#boardData').append(html);//tbody에 json데이터 렌더링
                 }
+            });
+        }
+    });
 
-               
-                if(views >= 10 && views <= 20){
-                    html += 
-                '<tr onclick=getBoard('+response[i].boardId+')><td>'  
-                +response[i].boardId+
-                '</td><td>'
-                +response[i].studentsName+
-                '</td><td>'
-                +response[i].title+
-                '</td><td>'
-                +response[i].updateAt+
-                '</td><td>'
-                +response[i].createAt+
-                '</td><td><span class = "middle">'
-                +response[i].cnt+
-                 '</span></td></tr>'
-                }
-              
-                if(views >= 20){
-                    html += 
-                '<tr onclick=getBoard('+response[i].boardId+')><td>'  
-                +response[i].boardId+
-                '</td><td>'
-                +response[i].studentsName+
-                '</td><td>'
-                +response[i].title+
-                '</td><td>'
-                +response[i].updateAt+
-                '</td><td>'
-                +response[i].createAt+
-                '</td><td><span class = "high">'
-                +response[i].cnt+
-                 '</span></td></tr>'
-                }
-            }
-        }else{
-            // 게시글 없으면 로직 구현
-            html += '<tr><td colspan=6 style= "text-align: center;"> 게시글이 없습니다.</tr></td>'
-        } // colspan = 6  : 목록이 6개
-        $('#boardData').children().remove(); //지우고 
-        $('#boardData').append(html); // tbody에 json데이터 렌더링
-        },
 
-        error : function(request, status, error){
-        console.log("에러 내용은 ==> " + error);
-            },
-         }); // ajax end
-       };  // if end
-        
-    }); // end function
+
 
 
 
