@@ -108,43 +108,43 @@
         </div>
          <!-- cards -->
          <div class="cardBox">
-             <div class="card">
-                 <div>
-                    <div id="studentsCnt" class="numbers">1,400</div>
-                    <div class="cardName">학생 수</div>
-                 </div>
-                 <div class="iconBx">
-                    <ion-icon name="school-outline"></ion-icon>
-                 </div>
-             </div>
-             <div class="card">
+            <div class="card">
                 <div>
-                   <div id="boardCnt" class="numbers">500</div>
-                   <div class="cardName">게시글 수</div>
+                   <div id="studentsCnt" class="numbers">1,400</div>
+                   <div class="cardName">학생 수</div>
                 </div>
                 <div class="iconBx">
-                    <ion-icon name="book-outline"></ion-icon>
+                   <ion-icon name="school-outline"></ion-icon>
                 </div>
             </div>
             <div class="card">
-                <div>
-                   <div id="writerCnt" class="numbers">300</div>
-                   <div class="cardName">작성자 수</div>
-                </div>
-                <div class="iconBx">
-                    <ion-icon name="code-slash-outline"></ion-icon>
-                </div>
-            </div>
-            <div class="card">
-                <div>
-                   <div id="viewsCnt" class="numbers">2,800</div>
-                   <div class="cardName">총 조회 수</div>
-                </div>
-                <div class="iconBx">
-                    <ion-icon name="eye-outline"></ion-icon>
-                </div>
-            </div>
-         </div>
+               <div>
+                  <div id="boardCnt" class="numbers">500</div>
+                  <div class="cardName">게시글 수</div>
+               </div>
+               <div class="iconBx">
+                   <ion-icon name="book-outline"></ion-icon>
+               </div>
+           </div>
+           <div class="card">
+               <div>
+                  <div id="writerCnt" class="numbers">300</div>
+                  <div class="cardName">작성자 수</div>
+               </div>
+               <div class="iconBx">
+                   <ion-icon name="code-slash-outline"></ion-icon>
+               </div>
+           </div>
+           <div class="card">
+               <div>
+                  <div id="viewsCnt" class="numbers">2,800</div>
+                  <div class="cardName">총 조회 수</div>
+               </div>
+               <div class="iconBx">
+                   <ion-icon name="eye-outline"></ion-icon>
+               </div>
+           </div>
+        </div>
          <!-- table -->
          <div class="details">
              <div class="recentOrders">
@@ -242,28 +242,26 @@
     list.forEach((item) => {item.addEventListener('mouseover',activeLink)});
 </script>
 <script>
-    // 게시판 리스트 호출 
     getBoardList(); // 함수 호출 (없으면 결과 안 뜸)
     
-    getBoardStatistics(); // 통계 함수 호출
-
+    // 게시판 리스트 호출 
+    getBoardStatistics();
     function getBoardStatistics(){
-        
         $.ajax({
-        url : 'http://localhost:8080/api/v1/board/statistics',
-        type : 'GET',
-        dataType : 'json',
-        success : function(response){ 
-             console.log(response)
-            // text() or html() input을 제외한 태그를 컨트롤할 때 사용.
-            // val()은 input 컨트롤할 때 사용
-            $('#boardCnt').text(response.boardCnt);
-            $('#studentsCnt').text(response.studentsCnt);
-            $('#writerCnt').text(response.writerCnt);
-            $('#viewsCnt').text(response.viewsCnt);
+            url: 'http://localhost:8080/api/v1/board/statistics',
+            type : 'GET',
+            dataType : 'json',
+            success : function(response){
+                // text() or html() input을 제외한 태그를 컨트롤할 때 사용
+                //val()은 input 컨트롤할때 사용
+                $('#boardCnt').text(response.boardCnt);
+                $('#viewsCnt').text(response.viewsCnt);
+                $('#writerCnt').text(response.writerCnt);
+                $('#studentsCnt').text(response.studentsCnt);
             }
-          });
-        };  //end
+        });
+
+    };
 
     function getBoardList(){
     $.ajax({
