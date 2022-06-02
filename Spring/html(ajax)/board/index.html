@@ -338,7 +338,6 @@
                 }
             }// end for
             // 페이징 화면 구현
-
             var paginationHtml = '';
             if(response.hasPreviousPage){ // 이전 페이지가 있다면(true)
                 paginationHtml  += '<a <a onclick="getBoardList('+(response.pageNum-1)+', '+pageSize+')" href="#">Previous</a>';
