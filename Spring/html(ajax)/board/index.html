@@ -199,13 +199,13 @@
                      </tbody>
                  </table>
                  <div class="pagination">
-                    <a href="#">Previous</a>
+                    <!-- <a href="#">Previous</a>
                     <a href="#">1</a>
                     <a href="#">2</a>
                     <a href="#">3</a>
                     <a href="#">4</a>
                     <a href="#">5</a>
-                    <a href="#">Next</a>
+                    <a href="#">Next</a> -->
                  </div>
              </div>
          </div>
@@ -242,7 +242,7 @@
     list.forEach((item) => {item.addEventListener('mouseover',activeLink)});
 </script>
 <script>
-    getBoardList(); // 함수 호출 (없으면 결과 안 뜸)
+   
     
     // 게시판 리스트 호출 
     getBoardStatistics();
@@ -267,75 +267,103 @@
         });
     };//end
 
-    function getBoardList(){
+
+
+    getBoardList(1, 10); // 함수 호출 (없으면 결과 안 뜸)
+
+    function getBoardList(pageNum, pageSize){
     $.ajax({
-        url : 'http://localhost:8080/api/v1/board',
+        url : 'http://localhost:8080/api/v1/board?pageNum='+pageNum+'&pageSize='+pageSize,
         type : 'GET',
         dataType : 'json',
         success : function(response){ //(파라미터 변수 이름이라 임의로 지정가능)
             // 게시판 조회하는 controller의 리턴타입이 변수 response에 담김
+            console.log(response);
         var html = "";
-        if(response.length>0){ // 
-        for(var i=0; i<response.length; i++){ // 
+        if(response.list.length>0){  
+        for(var i=0; i<response.list.length; i++){ // 
                 // 조회수 count 로직 여기서 구현하기 why? for문이 돌아야 count가 가능하니까
                 // var 조회수 =  response[i].조회수;
-            var views = response[i].cnt;  
+            var views = response.list[i].cnt;  
             if(views < 10){         
                 html += 
-            '<tr onclick=getBoard('+response[i].boardId+')><td>'  
-                +response[i].boardId+
+            '<tr onclick=getBoard('+response.list[i].boardId+')><td>'  
+                +response.list[i].boardId+
                 '</td><td>'
-                +response[i].studentsName+
+                +response.list[i].studentsName+
                 '</td><td>'
-                +response[i].title+
+                +response.list[i].title+
                 '</td><td>'
-                +response[i].updateAt+
+                +response.list[i].updateAt+
                 '</td><td>'
-                +response[i].createAt+
+                +response.list[i].createAt+
                 '</td><td><span class = "row">'
-                +response[i].cnt+
+                +response.list[i].cnt+
                  '</span></td></tr>'
                 }
     
                
                 if(views >= 10 && views <= 20){
-                    html += 
-                '<tr onclick=getBoard('+response[i].boardId+')><td>'  
-                +response[i].boardId+
+                html += 
+                '<tr onclick=getBoard('+response.list[i].boardId+')><td>'  
+                +response.list[i].boardId+
                 '</td><td>'
-                +response[i].studentsName+
+                +response.list[i].studentsName+
                 '</td><td>'
-                +response[i].title+
+                +response.list[i].title+
                 '</td><td>'
-                +response[i].updateAt+
+                +response.list[i].updateAt+
                 '</td><td>'
-                +response[i].createAt+
-                '</td><td><span class = "middle">'
-                +response[i].cnt+
+                +response.list[i].createAt+
+                '</td><td><span class = "row">'
+                +response.list[i].cnt+
                  '</span></td></tr>'
                 }
               
                 if(views >= 20){
                     html += 
-                '<tr onclick=getBoard('+response[i].boardId+')><td>'  
-                +response[i].boardId+
+                '<tr onclick=getBoard('+response.list[i].boardId+')><td>'  
+                +response.list[i].boardId+
                 '</td><td>'
-                +response[i].studentsName+
+                +response.list[i].studentsName+
                 '</td><td>'
-                +response[i].title+
+                +response.list[i].title+
                 '</td><td>'
-                +response[i].updateAt+
+                +response.list[i].updateAt+
                 '</td><td>'
-                +response[i].createAt+
-                '</td><td><span class = "high">'
-                +response[i].cnt+
+                +response.list[i].createAt+
+                '</td><td><span class = "row">'
+                +response.list[i].cnt+
                  '</span></td></tr>'
                 }
+            }// end for
+            // 페이징 화면 구현
+
+            var paginationHtml = '';
+            if(response.hasPreviousPage){ // 이전 페이지가 있다면(true)
+                paginationHtml  += '<a <a onclick="getBoardList('+(response.pageNum-1)+', '+pageSize+')" href="#">Previous</a>';
             }
+            for(var i=0; i<response.navigatepageNums.length; i++){ // 페이지 번호 길이 만큼 for문 실행 / navigatepageNums : array
+                paginationHtml += '<a id="pageNum'+response.navigatepageNums[i]+'" onclick="getBoardList('+response.navigatepageNums[i]+', '+pageSize+')" href="#">'+response.navigatepageNums[i]+'</a>';
+                // id = pageNum1
+            }
+            if(response.hasNextPage){ // 다음 페이지가 있다면(true)
+                paginationHtml  += '<a onclick="getBoardList('+(response.pageNum+1)+', '+pageSize+')" href="#">Next</a>';
+            }
+            $('.pagination').children().remove(); // 성형작업1
+            $('.pagination').append(paginationHtml);
+
+            // 페이지 번호에 맞게 css 수정 
+            // 성형작업 2-1
+            $('#pageNum'+pageNum).css('backgroundColor','#287bff'); // 파라미터로 클릭한 페이지 번호를 받아오기 때문에 색상이 변경될 수 있음
+            $('#pageNum'+pageNum).css('color','#fff')
+
+
         }else{
             html += '<tr><td colspan=6 style= "text-align: center;"> 게시글이 없습니다.</tr></td>'
         } // colspan = 6  : 목록이 6개
-    
+        
+        $('#boardData').children().remove();  // 성형작업1
         $('#boardData').append(html); // tbody에 json데이터 렌더링
             },
         });
@@ -348,7 +376,7 @@
         if(confirm('게시글을 작성하시겠습니까?')){
         var title = $('#title').val();
         var content = $('#content').val();
-        var studentsId = 2; // DB에 있는 studentsId로 임시 설정
+        var studentsId = 9; // DB에 있는 studentsId로 임시 설정
 
         //빈칸 확인
         if(title == ''){
@@ -383,7 +411,7 @@
               $('#content').val('');
               $('#boardData').children().remove(); 
               // tbody에 있는 기존 append를 지우고 새로운 함수를 호출해야 한다 remove 하지 않으면 게시글 목록이 추가로 또 생긴다. 
-              getBoardList(); //아래 함수 호출
+              getBoardList(1,10); //아래 함수 호출
           }
         }
 
@@ -441,7 +469,7 @@
                     alert('수정 완료');
                     $('#boardData').children().remove();
                     $('.update-popup').css('display', 'none'); // 게시물 상세 화면 감추기
-                    getBoardList();
+                    getBoardList(1,10);
                 }
             }
         }); //ajax end 
@@ -461,7 +489,7 @@
                 if(response > 0){
                     alert('삭제 완료!')
                     $('#boardData').children().remove();
-                    getBoardList();// delete or insert 할때 데이터가 변경됐으니 리스트를 새로 불러와야 한다.
+                    getBoardList(1,10);// delete or insert 할때 데이터가 변경됐으니 리스트를 새로 불러와야 한다.
                     $('.update-popup').css('display', 'none'); // 게시물 상세 화면 감추기
                     }
                 }
@@ -477,7 +505,7 @@
             success: function (response) {
                 if(response > 0){
                     $('#boardData').children().remove();//tbody id
-                    getBoardList();
+                    getBoardList(1,10);
                 }
             }
         });
@@ -498,17 +526,53 @@
                 dataType: 'json',
                 success: function (response) {
                     var html = '';
-                    if(response.length > 0){
-                        for(var i=0; i<response.length; i++){          
-                            var views = response[i].cnt;
-                            if(views < 10){
-                                html += '<tr onclick=getBoard('+response[i].boardId+') ><td>'+response[i].boardId+'</td><td>'+response[i].studentsName+'</td><td>'+response[i].title+'</td><td>'+response[i].updateAt+'</td><td>'+response[i].createAt+'</td><td><span class="row">'+response[i].cnt+'</span></td></tr>';  
+                    if(response.list.length > 0){
+                        for(var i=0; i<response.list[i].length; i++){          
+                            var views = response.list[i].cnt;
+                            if(views < 10){         
+                            html += '<tr onclick=getBoard('+response.list[i].boardId+')><td>'  
+                            +response.list[i].boardId+
+                            '</td><td>'
+                            +response.list[i].studentsName+
+                            '</td><td>'
+                            +response.list[i].title+
+                            '</td><td>'
+                            +response.list[i].updateAt+
+                            '</td><td>'
+                            +response.list[i].createAt+
+                            '</td><td><span class = "row">'
+                            +response.list[i].cnt+
+                            '</span></td></tr>'
                             }
                             if(views >= 10 && views < 20){
-                                html += '<tr onclick=getBoard('+response[i].boardId+') ><td>'+response[i].boardId+'</td><td>'+response[i].studentsName+'</td><td>'+response[i].title+'</td><td>'+response[i].updateAt+'</td><td>'+response[i].createAt+'</td><td><span class="middle">'+response[i].cnt+'</span></td></tr>';  
+                            html += '<tr onclick=getBoard('+response.list[i].boardId+')><td>'  
+                            +response.list[i].boardId+
+                            '</td><td>'
+                            +response.list[i].studentsName+
+                            '</td><td>'
+                            +response.list[i].title+
+                            '</td><td>'
+                            +response.list[i].updateAt+
+                            '</td><td>'
+                            +response.list[i].createAt+
+                            '</td><td><span class = "row">'
+                            +response.list[i].cnt+
+                            '</span></td></tr>'  
                             }
                             if(views >= 20){
-                                html += '<tr onclick=getBoard('+response[i].boardId+') ><td>'+response[i].boardId+'</td><td>'+response[i].studentsName+'</td><td>'+response[i].title+'</td><td>'+response[i].updateAt+'</td><td>'+response[i].createAt+'</td><td><span class="high">'+response[i].cnt+'</span></td></tr>';  
+                                '<tr onclick=getBoard('+response.list[i].boardId+')><td>'  
+                            +response.list[i].boardId+
+                            '</td><td>'
+                            +response.list[i].studentsName+
+                            '</td><td>'
+                            +response.list[i].title+
+                            '</td><td>'
+                            +response.list[i].updateAt+
+                            '</td><td>'
+                            +response.list[i].createAt+
+                            '</td><td><span class = "row">'
+                            +response.list[i].cnt+
+                            '</span></td></tr>'
                             }
                         }
                     }else{
@@ -521,6 +585,8 @@
             });
         }
     });
+
+
 
 
 
