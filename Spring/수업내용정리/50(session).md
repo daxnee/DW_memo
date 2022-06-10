@@ -82,3 +82,9 @@ ex) 자바에선 object , 디비버에선 root 계정
 단,  컨트롤러가 @Restcontroller가 아니라면 
 
 @ResponseBody  : 나는 기존 controller처럼 페이지 리턴으로 하는게  아니라 json으로 리턴할거야
+
+
+
+### 220610
+
+http://localhost:8080/board?pageNum=1&pageSize=10 임시 보관
