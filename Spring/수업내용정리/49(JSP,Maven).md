@@ -75,35 +75,39 @@ jsp : html소스코드 속에 java소스코드가 들어가는 구조를 갖는 
 
 `서블릿 컨테이너`
 ```
-서블릿컨테이너 : 서블릿들의 생성, 실행, 파괴를 담당. 서블릿을 담는 상자이다. *컨테이너(담다, 품다) 
-- Clinet의 Request를 받아주고 Response할 수 있게, 웹 서버와 소켓을 만들어 통신한다.
-- 우리가 만든 mvc(service, controller)를 서블릿컨테이너에 담아야 실행이 가능함.
+서블릿컨테이너 : 서블릿들의 생성, 실행, 파괴를 담당. 서블릿을 담는 상자이다. (대표적 서블릿 컨테이터로 'Tomcat'이 있다) 
+	* 컨테이너(담다, 품다) 
 
-대표적 서블릿 컨테이터로 'Tomcat'이 있다. 
+- Clinet의 Request를 받아주고 Response할 수 있게, 웹 서버와 소켓을 만들어 통신한다.
+
+- 우리가 만든 mvc(service, controller)를 서블릿컨테이너에 담아야 실행이 가능함.
 ```
+
+### 2. 톰캣
 
 `톰캣`
 ```
 톰캣 : 대표적 서블릿컨테이너 서비스 종류 중 하나
 
-- 웹서버와 소캣을 만들어 통신하며 JSP와 Servlet이 작동할 수 있는 환경을 제공해준다
-- 톰캣을 설치해야 포트가 열린다
-포트가 열린다?(포트번호 8080) => 서버가 열렸다
 
+- 웹서버와 소캣을 만들어 통신하며 JSP와 Servlet이 작동할 수 있는 환경을 제공해준다
+
+- 톰캣을 설치해야 포트가 열린다
+ 	* 포트가 열린다?(ex.포트번호 8080) => Server가 열렸다는 의미
+
+- Spring에선 별도 설치가 필요하지만 Spring Boot에선 내장되어 있다.
 
 출처 : https://velog.io/@han_been/%EC%84%9C%EB%B8%94%EB%A6%BF-%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88Servlet-Container-%EB%9E%80
-
-```
-
-
-
-###  2. 톰캣(Tomcat)
-```
-
 ```
 ---
-## JSP 프로젝트 
+## JSP (with Maven)
 ---
+
+### JSP?
+```
+HTML코드에 Java 코드를 넣어 동적인 웹 페이지를 생성하는 웹 어플리케이션 도구.
+```
+
 ### 1. MAVEN 설정 방법
 
 1) 파일 다운로드
@@ -111,15 +115,64 @@ jsp : html소스코드 속에 java소스코드가 들어가는 구조를 갖는 
 jsp이름으로 파일 다운로드(https://start.spring.io/) 압축 풀기 - import(워크스페이스에 압축 풀기 - 이클립스 임포트 - jsp 파일 선택 - import) 
 ```
 
-2) 롬복 설정
+
+
+2) pom/xml 설정(build tools)
 ```
-메이븐은 pom.xml에서 롬복 설정을 해줘야 한다.
-* refresh 안해도 자동으로 설정된다.
+Maven은 pom.xml에서 build tools 설정을 해줘야 한다.
+(Gradle은 Build.gradle에 설정)
+* Gradle과 다르게 refresh 안해도 자동으로 설정된다. (저장만 하기)
 ```
 
 ![jsp_xml](https://user-images.githubusercontent.com/96815399/172520911-0511d05d-3e86-4535-98cc-0cdc7ec8646e.PNG)
 	* version 지우기 => 지우면 최신버전으로 다운받는다는 의미임(저장하면 자동 refresh)
 
+
+### jsp / session / devtools
+```
+	<dependencies>
+	<!--JSP-->
+		<dependency>
+		    <groupId>org.apache.tomcat.embed</groupId>
+		    <artifactId>tomcat-embed-jasper</artifactId>
+		</dependency>
+
+		<dependency> 
+			  <groupId>javax.servlet</groupId> 
+			  <artifactId>jstl</artifactId> 
+			  <version>1.2</version> 
+		</dependency>
+		
+	<!--session-->
+		<dependency>
+		    <groupId>org.springframework.session</groupId>
+		    <artifactId>spring-session-core</artifactId>
+		    <version>2.7.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+```
+![pom_xml](https://user-images.githubusercontent.com/96815399/172775271-bde5acb2-4045-42b3-ac04-a86cdf4fce30.PNG)
+
+### + devtools(추가) : 저장된 내역 자동으로 컴파일
+```
+	<!--devtools-->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-devtools</artifactId>
+		</dependency> 
+```
 ---
 
 ### 2. jsp 패키지 만들기(이클립스)
@@ -133,10 +186,19 @@ src/main/wepapp 우클 new -> 제너럴 -> folder
 'views'에 붙여넣기
 ```
 
-### 3. index 내용 설정 
+### 3. index 태그 설정(3가지) 
 ```
-이미지 추가 예정
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+=> java라는 언어를 사용할 수 있는 태그
+    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+=> core : otherwise, choose, when 등의 함수를 사용가능한 기능 / 
+prefix="c" : ""안 단어를 함수 사용시 붙여야 사용가능. 
+ex) <c:when> 
 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+=>  fn : function 함수 사용하려면 위 태그가 필요함 
 ```
 
 
@@ -145,7 +207,6 @@ src/main/wepapp 우클 new -> 제너럴 -> folder
 maven repository 검색
 https://mvnrepository.com/ 
 추가할 프로그램 검색 ex) oracle (버전은 회사마다 다르니 물어보고 다운로드 받기)
-
 ```
 ---
 ## JSP 특징
@@ -178,12 +239,3 @@ jsp에서 ajax도 가능하다! 왜? 기존 html에 jsp가 추가된거니까
 https://velog.io/@ye050425/JSP-JSTL-%EC%A0%95%EB%A6%AC
 
 ```
-
-
-###
-
-영아이티
-핸디소프트 
-솔탑
-대연아이앤티
-메이아이

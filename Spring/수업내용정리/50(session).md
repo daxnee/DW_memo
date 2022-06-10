@@ -11,7 +11,7 @@ server.servlet.session.timeout=30
 
 
 ---
-### JSP pom/xml 설정
+### JSP pom/xml 설정(build tools)
 ---
 ```
 	<dependencies>
