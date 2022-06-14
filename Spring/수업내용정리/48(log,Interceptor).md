@@ -32,5 +32,23 @@ registry.addInterceptor(interceptor).excludePathPatterns("/api/v1/logs"); // con
 
 ```
 
+### Interceptor 예시
+
+```java 
+
+@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		//우리가 만든 interceptor를 스프링에 등록
+		registry
+		.addInterceptor(interceptor)
+		.excludePathPatterns("/api/v1/logs","/login", "/join","/api/v1/login", "/resources/static/css/*"); // "/resources/static/css/* : 설정된 경로를 인터셉트"
+		// 이 url은 가로채지 말라는 뜻임 (요청을 해도 안 나옴) excludePathPatterns 안에 적은 url은 console에 찍어도 ip,url,Method가 안나옴
+
+// => login.jsp의 href 경로를 모두 포함시켜 인터셉트 하겠다
+	
+	}
+```
+
+
 ### 서버 오류 참고 사이트
 https://luckyyowu.tistory.com/377
