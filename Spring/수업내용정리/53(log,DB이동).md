@@ -1,6 +1,6 @@
 ### 220616
 
-### JAV
+### DB 데이터 => 엑셀파일 다운 받기(with 이클립스)
 ---
 1. 엑셀 dependency 추가 (refresh)
 ```java
