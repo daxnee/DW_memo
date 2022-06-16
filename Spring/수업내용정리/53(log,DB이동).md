@@ -1,6 +1,6 @@
 ### 220616
 
-### 엑셀파일 다운로드
+### JAV
 ---
 1. 엑셀 dependency 추가 (refresh)
 ```java
@@ -8,7 +8,7 @@
 implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '5.2.2'
 ```
     * gradle에 추가한 항목은 어디에 다운될까?
-    :c/사용자/23/gradle 
+    => :c/사용자/23/gradle 에서 확인이 가능
 ---
 2. Excel 전용 controller, service 생성    
 
@@ -214,58 +214,75 @@ public class ExcelController {
 => 프로젝트할 땐 syso으로 출력해보고 최종 업로드 할땐 syso 모두 지우면 된다.
 
 ---
+---
+## AWS 
 
-### AWS (EC2 / S3) (보충)
+### RDS(Relational Database Service)
+---
 ```
-EC2 (DB 설치해보기)
-개인컴퓨터
-자바, 톰캣
+RDS : AWS에서 제공하는 데이터베이스 전용 서버
+원하는 데이터베이스 상품을 선택해서 사용 가능.
+퍼블릭 엑세스를 설정해야 접속할 수 있다.
 
 
-생각보다 DB설치 하는 방법이 까다롭다
-=> RDS 라는 설치된 DB를 구매하면 된다 (1년 무료)
-
-<생성하기>
+AWS에 DB설치 하는 방법이 까다롭다
+=> RDS 라는 설치된 DB를 구매하면 됨 (1년 무료)
+```
+### RDS 생성하기
+---
+1. AWS에서 `RDS 생성`
+```
 -> 데이터베이스 생성
 -> MySQL 클릭
--> <템플릿 > 프리이터 선택
+-> <템플릿> 프리티어 선택
 -> DB 인스턴스 식별자 : daeun-database
 -> 암호 설정
 -> <인스턴스구성> db.t2.micro 설정(무료)
 -> <스토리지> 20기가 (최대)
 -> <연결> 퍼블릭 엑세스 : '예' 설정 (사실 퍼블릭으로 하면 안됨. 그건 실무가서 배우기)
 -> 데이터베이스 생성
-
-
-<인바운드, 아웃바운드 규칙 설정>
-mysql.auro 3306 
----
-
--> 다시 RDS 클릭 
--> 데이터베이스 
--> DB식별자 , 식별자 이름 클릭 
 ```
-디비버로 돌아가서 
-localhost 우클 
-Connection
+2. 인바운드, 아웃바운드 `규칙 설정`
+
+![인바운드규칙추가](https://user-images.githubusercontent.com/96815399/174083225-9fec78e4-2691-4510-8343-37bf66fa1741.png)
+
+
+3. RDS 엔드포인트 `ctrl+c`
+```
+-> RDS
+-> 데이터베이스 
+-> DB식별자 , 식별자 이름 클릭
+-> 엔드포인트 복사 
+```
+
+4. 디비버에서 `AWS 전용 DB 생성`
+```
+-> 디비버로 돌아가서 
+-> 새 데이터베이스 연결
+-> mysql 선택, 디비 생성
+-> 데이터베이스(dw) 우클 
+-> Edit Connection
+```
+<커넥션 첨부 사진>
 
  ![디비버커넥션](https://user-images.githubusercontent.com/96815399/173983305-f376bb6f-82a8-4814-9429-4f4b98c7f5c1.PNG)
 
-```
     1) aws rds에서 만든 데이터베이스의 엔드포인트를 복붙(rds는 보안상 ip 안 알려줌)
     2) rds 생성시 설정한 비밀번호 입력
         *username : admin(default)
 
--> DB 이름 변경 (Edit Connection) : AWS_DB
+5. 이름변경 & 생성확인
+```
+-> DB 이름 변경 (Edit Connection) : AWS_DB 
 -> 초록색 체크 표시 확인(연결 성공 신호)
 ```
 
 ### => 퍼블릭 DB 생성완료(어디서든 DB에 접속 가능하게 됨)
 
+---
 
 ### 원래 있던 퍼블릭 DB에 DB옮겨주기 
 ```
-
 -> aws의 sql 편집기
 -> CREATE database dw DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci; 구문 입력  
 
@@ -279,7 +296,7 @@ Connection
 -> 진행 클릭
 ```
 
-일단 임시로 board/ board_logs / students 테이블만 데이터 옮기기
+* 일단 임시로 board/ board_logs / students 테이블만 데이터 옮기기
                                                 
 ---
 ---
