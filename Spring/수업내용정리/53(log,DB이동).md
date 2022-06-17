@@ -207,6 +207,7 @@ public class ExcelController {
 
 ### 로그 출력 방법
 - 로깅 라이브러리는 slf4j 을 사용하여 내가 로그를 남길 클래스에 선언을 해주고 메소드 내에서 사용하면 된다.
+
 ```java
 	private static final Logger logger = LoggerFactory.getLogger(Interceptor.class);
 
@@ -228,9 +229,9 @@ public class ExcelController {
 
 ```
 
-```
-
 => 프로젝트할 땐 syso으로 출력해보고 최종 업로드 할땐 syso 모두 지우면 된다.
+
+참고 : https://haenny.tistory.com/3
 
 ---
 ---
