@@ -89,15 +89,17 @@ public class BoardApplication extends SpringBootServletInitializer{ //
  * 주의점 : tomcat 권한은 ROOT만 갖고 있기 때문에 ROOT 계정으로 접속해줘야 한다 (- su)    
 ```  
 -> su - 입력 : root로 로그인
--> pwd
+-> pwd (root인지 확인)
 -> cd /home/ubuntu(우분투에 파일이 있으니까 루트에 들어가야 된다)
 
--> 다시 cd .. home (home으로 돌아가기)
--> tomcat 들어가서 파일 삭제 : rm -rf * (파일 강제 삭제)   
--> ls로 삭제 파일 잔여 여부 확인
--> cd /ubuntu (우분투로 이동)
+-> 다시 cd .. (home으로 돌아가기)
+-> cd tomcat (톰캣으로 이동) , ls로 현재 파일 확인 
+-> cd webapps
+-> 파일 삭제 : rm -rf * (파일 강제 삭제)   
+-> cd /home, ls로 삭제 파일 잔여 여부 확인
+-> cd home/ubuntu (우분투로 이동)
+-> 
 ```
-
 
 
 5. 루트파일을 톰캣에 옮기기
@@ -112,6 +114,9 @@ cd/ home/tomcat/webapps
 tail -f catalina out: 실시간으로 로그를 확인할 수 있음
 => 배포하기 전에 창을 켜놓고 테스트 해보면서 프로그램 작동을 확인할 수 있음 (ctrl+c :실시간 로그창 종료)
 ```
+<사진참고>
+![xshell](https://user-images.githubusercontent.com/96815399/174246557-7eb18219-495f-414e-a69e-fd7036e30849.PNG)
+
 - 만약에 배포 완료했는데 켜지지 않을때? 서버를 확인해보자
 => netstat -tnlp : 8080포트번호가 있는지 확인 
 
