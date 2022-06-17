@@ -197,7 +197,8 @@ public class ExcelController {
 
 ---
 ## Log
-### 실무에선 system.out.print.ln 으로 결과를 출력하지 않고 `log`를 이용한다. log 출력하면 요청 시간, 내가 설정한 ip, url , HTTP method가 전부 출력됨
+- 로그 사용 이유 : System.out으로 로그를 찍을 경우 에러발생 시 추적할 수 있는 최소한의 정보가 없다.
+### 실무에선 `log`를 이용함. log 출력하면 요청 시간, 내가 설정한 ip, url , HTTP method가 전부 출력됨
  - ex) 쇼핑몰 주문내역 확인
     - 주문이 누락됐다는 고객 컴플레인이 들어오면 CS -> 개발자팀으로 컴플내용을 전달 
         - 1) 쿼리문 작성해서 주문내역 조회
@@ -205,8 +206,26 @@ public class ExcelController {
             - 이 순서로 주문내역을 확인하고 이상이 없으면 개발팀 문제가 아닌걸로 판단, 다음 유관부서로 내용을 전달한다. 
 
 ### 로그 출력 방법
----
-1.
+- 로깅 라이브러리는 slf4j 을 사용하여 내가 로그를 남길 클래스에 선언을 해주고 메소드 내에서 사용하면 된다.
+```java
+	private static final Logger logger = LoggerFactory.getLogger(Interceptor.class);
+
+
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) 	throws Exception {
+		
+		String ip = request.getHeader("x-forwarded-For"); // 클라이언트의 ip를 수집할 수 있다.
+		String url = request.getRequestURI();
+		String httpMethod = request.getMethod();
+		
+		if(ip == null) {
+			ip = request.getRemoteAddr();
+		}
+		
+		logger.info("Client IP : " + ip); // info로 출력
+		logger.info("request url : " + url);
+		logger.info("request HTTP Method : " + httpMethod);
+
 ```
 
 ```
@@ -215,7 +234,12 @@ public class ExcelController {
 
 ---
 ---
-## AWS 
+## AWS (EC2,S3,RDS)
+```
+EC2 : 프로젝트, java (db설치 가능함 but, 어려워서 rds를 이용하는 것)
+S3 : 포트폴리오(웹호스팅) , 이미지 자료만 업로드(jsp같은거 업로드하면 에러남)
+RDS : 프로젝트 관련 DB (프리티어)
+```
 
 ### RDS(Relational Database Service)
 ---
@@ -276,17 +300,15 @@ AWS에 DB설치 하는 방법이 까다롭다
 -> DB 이름 변경 (Edit Connection) : AWS_DB 
 -> 초록색 체크 표시 확인(연결 성공 신호)
 ```
-
 ### => 퍼블릭 DB 생성완료(어디서든 DB에 접속 가능하게 됨)
 
 ---
 
-### 원래 있던 퍼블릭 DB에 DB옮겨주기 
+### Public IP에 기존 DB(디비버) 내보내기
 ```
--> aws의 sql 편집기
--> CREATE database dw DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci; 구문 입력  
-
-원래 로컬 호스트 데이터 테이블 다중 선택 우클
+-> aws의 sql 편집기 열기
+-> CREATE database dw DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci; 구문 입력 (테이블 생성)
+-> 원래 로컬 호스트 데이터 테이블 다중 선택 우클
 -> 데이터 내보내기 
 -> 테이블 클릭 , 다음
 -> choose , 경로 설정
@@ -297,10 +319,10 @@ AWS에 DB설치 하는 방법이 까다롭다
 ```
 
 * 일단 임시로 board/ board_logs / students 테이블만 데이터 옮기기
+(엔드포인트로 디비버 연결, init.sql 구문 실행, 데이터 내보내기)
                                                 
 ---
 ---
-
 ### 개발모드 운영모드 쉽게 전환하기
 ---
 ### `개발환경(dev)`
