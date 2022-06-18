@@ -7,21 +7,19 @@ Java 배포 툴 : Gradle, Maven (Spring, Android)
 ---
 ### `jar / war`
 ```
-업로드 x => 배포 (Deploy)
+업로드 x , 배포 (Deploy)
 
 .jar(자르) : 바로 실행 가능한 어플리케이션(프로그램) 
-.war(와르) : 바로 실행 가능이 불가한 어플리케이션(프로그램) egov(전자정부프레임워크), spring은 이것만 됨
+.war(와르) : 바로 실행 가능이 불가한 어플리케이션(프로그램) *egov(전자정부프레임워크), spring은 얘만 가능
 ```
 ### egov/ spring / boot/
 ```
-- Spring boot - 내장톰캣이라는 기능이 있음. => .jar 
+- Spring boot - 내장톰캣이라는 기능이 있음. => .jar 가능
+- Spring,Spring egov - 내장톰캣이라는 기능이 없음 => .jar 불가능  
 
-- Spring egov - 내장톰캣이라는 기능이 없음 => .jar 불가능  
-- Spring - 내장톰캣이라는 기능이 없음
+Spring egov, Spring은 톰캣을 설치 해야함. (war 배포만 가능하니깐) -> war를 위한 톰캣을 설치한다라고 생각하면 쉽다
 
-Spring boot를 war로 배포(업로드)하고 싶다. 톰캣을 설치 해야함.
-
-Spring egov, Spring 톰캣을 설치 해야함. (war 배포만 가능하니깐) -> war를 위한 톰캣을 설치한다라고 생각하면 쉽다
+만약 Spring boot으로도 war로 배포(업로드)하고 싶다? =>  톰캣을 설치 해야함.
 ```
 ---
 ---
@@ -44,16 +42,6 @@ bootWar{
 	archiveVersion = '0.0.1'
 }
 ```
-```
--> 그래들 테스크 탭 클릭(빌드라는 것을 통해 컴퓨터가 알아들을 수 있게 해야한다)
--> 빌드 폴더 열기
--> Gradle Tasks 클릭
--> 클린 클릭
--> boot war 더블클릭
-
-
-```
----
 
 1. gradle 추가
 ```java
@@ -72,12 +60,24 @@ public class BoardApplication extends SpringBootServletInitializer{ //
 	}
 ```
 
-3. bootwar 클릭(war 파일 수정 시간 확인) 
+3. war 파일 생성
 ```
-이름 수정 : ROOT.war
+-> Gradle Tasks 탭 클릭(빌드라는 것을 통해 컴퓨터가 알아들을 수 있게 해야한다)
+-> bulid 폴더 열기
+-> Gradle Tasks 클릭
+-> clean 클릭
+-> bootWar 클릭
+-> war 파일 생성확인(war 파일 수정 시간 확인) 
+->이름 수정 : ROOT.war
 ```
 
-4. XShell 열기 (clear) 
+<war 파일 경로 확인>
+
+![war경로](https://user-images.githubusercontent.com/96815399/174435228-1a136aae-66eb-49ca-935b-84f76b1c34e1.png)
+
+### 배포하기 
+---
+1. XShell 열기 (clear) 
 ```
 -> pwd (현재 위치 ROOT 확인)
 -> 상단의 `새 파일 전송` (초록색 버튼) 클릭(파일전송) 
@@ -101,8 +101,7 @@ public class BoardApplication extends SpringBootServletInitializer{ //
 -> 
 ```
 
-
-5. 루트파일을 톰캣에 옮기기
+2. 루트파일을 톰캣에 옮기기
 ```
 - mv ROOT.war /home/tomcat/webapps 엔터 => 배포 끝
     *배포할 파일 이름 까먹었다? tomcat까지만 입력하고 tab키 누르면 파일 이름 확인할 수 있음
@@ -148,5 +147,5 @@ AWS 람다 : 배포없이 코드에 집중할 수 있게 도와주는 상품. (�
 ```
 ![빈즈톡](https://user-images.githubusercontent.com/96815399/174214283-3f10687e-7c53-4e65-852e-b6737c91882a.png)
 
-만약에 사용할거면 서버 동시에 두 대가 실행되는거니까 기존에 실행되고 있던 EC2 종료하고 사용하기
+#### 만약 빈즈톡 or 람다로 이용할거면 기존에 실행되고 있던 EC2 종료하고 사용하기(서버 동시에 두 대가 실행되는거니까 돈이 두배~! )
 ---

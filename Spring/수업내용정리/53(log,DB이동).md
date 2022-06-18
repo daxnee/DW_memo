@@ -227,9 +227,10 @@ public class ExcelController {
 		logger.info("request url : " + url);
 		logger.info("request HTTP Method : " + httpMethod);
 
-```
+// 서버 실행 후 board로 접속하면 log에 기록이 남는 것을 볼 수 있음
 
-=> 프로젝트할 땐 syso으로 출력해보고 최종 업로드 할땐 syso 모두 지우면 된다.
+```
+=> 프로젝트할 땐 syso으로 출력해보고 최종 업로드시 syso 모두 지우고 서버에 배포하면 됨.
 
 참고 : https://haenny.tistory.com/3
 
@@ -248,7 +249,6 @@ RDS : 프로젝트 관련 DB (프리티어)
 RDS : AWS에서 제공하는 데이터베이스 전용 서버
 원하는 데이터베이스 상품을 선택해서 사용 가능.
 퍼블릭 엑세스를 설정해야 접속할 수 있다.
-
 
 AWS에 DB설치 하는 방법이 까다롭다
 => RDS 라는 설치된 DB를 구매하면 됨 (1년 무료)
@@ -315,11 +315,11 @@ AWS에 DB설치 하는 방법이 까다롭다
 -> choose , 경로 설정
 -> aws_db 경로 확인
 -> 다음 x2 , 이동 목록 확인
--> [create] : 너가 옮기는 데이터의 테이블도 크리에이트 해주고 데이터도 넣어줄게
+-> [create] : 너가 옮기는 데이터의 테이블도 create 해주고 데이터도 넣어줄게
 -> 진행 클릭
 ```
 
-* 일단 임시로 board/ board_logs / students 테이블만 데이터 옮기기
+* 일단 임시로 board / board_logs / students 테이블만 데이터 옮기기
 (엔드포인트로 디비버 연결, init.sql 구문 실행, 데이터 내보내기)
                                                 
 ---
@@ -328,7 +328,7 @@ AWS에 DB설치 하는 방법이 까다롭다
 ---
 ### `개발환경(dev)`
 ```yaml
---- # --- :  기준으로 하나의 프로필이라고 생각
+--- # ' --- ' 기준으로 하나의 프로필이라고 생각
 spring:
    profiles: dev
    datasource:
