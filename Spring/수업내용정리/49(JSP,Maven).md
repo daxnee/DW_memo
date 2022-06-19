@@ -112,7 +112,11 @@ HTML코드에 Java 코드를 넣어 동적인 웹 페이지를 생성하는 웹 
 
 1) 파일 다운로드
 ```
-jsp이름으로 파일 다운로드(https://start.spring.io/) 압축 풀기 - import(워크스페이스에 압축 풀기 - 이클립스 임포트 - jsp 파일 선택 - import) 
+-> jsp이름으로 파일 다운로드(https://start.spring.io/) 압축 풀기 
+-> import(워크스페이스에 압축 풀기 
+-> 이클립스 import 
+-> jsp 파일 선택 
+-> import
 ```
 
 
@@ -125,7 +129,8 @@ Maven은 pom.xml에서 build tools 설정을 해줘야 한다.
 ```
 
 ![jsp_xml](https://user-images.githubusercontent.com/96815399/172520911-0511d05d-3e86-4535-98cc-0cdc7ec8646e.PNG)
-	* version 지우기 => 지우면 최신버전으로 다운받는다는 의미임(저장하면 자동 refresh)
+	
+* version 지우기 => 지우면 최신버전으로 다운받는다는 의미임(저장하면 자동 refresh)
 
 
 ### jsp / session / devtools
