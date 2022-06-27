@@ -12,7 +12,7 @@ Java 배포 툴 : Gradle, Maven (Spring, Android)
 .jar(자르) : 바로 실행 가능한 어플리케이션(프로그램) 
 .war(와르) : 바로 실행 가능이 불가한 어플리케이션(프로그램) *egov(전자정부프레임워크), spring은 얘만 가능
 ```
-### egov / spring / boot/
+### `egov / spring / boot/`
 ```
 - Spring boot - 내장톰캣이라는 기능이 있음. => .jar 가능
 - Spring,Spring egov - 내장톰캣이라는 기능이 없음 => .jar 불가능  
@@ -149,6 +149,8 @@ AWS 람다 : 배포없이 코드에 집중할 수 있게 도와주는 상품. (�
 <Beanstalk 생성 완료>
 
 ![빈즈톡](https://user-images.githubusercontent.com/96815399/174214283-3f10687e-7c53-4e65-852e-b6737c91882a.png)
+
+
 
 #### 만약 빈즈톡 or 람다로 이용할거면 기존에 실행되고 있던 EC2 종료하고 사용하기(서버 동시에 두 대가 실행되는거니까 돈이 두배~! )
 ---
